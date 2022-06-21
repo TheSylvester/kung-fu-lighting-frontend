@@ -1,0 +1,48 @@
+@import "reset.css"; /* meyer reset */
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap");
+@import "navbar.css";
+@import "hero.css";
+@import "effects.css";
+@import "profiles-gallery.css";
+@import "info.css";
+@import "footer.css";
+
+:root {
+  --black: #000;
+  --darkest: #111;
+  --dark: #252525;
+  --darkgrey: #333;
+  --grey: #777;
+  --lightgrey: #999;
+  --green: #44d62c;
+  --white: #fff;
+  --light: 300;
+  --regular: 400;
+  --semibold: 600;
+  --bold: 700;
+
+  --swatchsize: 10px;
+
+  --chroma: linear-gradient(
+    90deg,
+    #ff0000 4.17%,
+    #ffff00 27.6%,
+    #ffff00 34.79%,
+    #00ffff 65.52%,
+    #3300ff 80.57%,
+    #ff00ff 95.63%
+  );
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--dark);
+  overflow: auto;
+}
+
+.divider-gap {
+  height: 15px;
+}

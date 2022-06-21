@@ -21,3 +21,11 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# other test code
+new-hero.css
+new-info.css
+carousel-test.css
+carousel-test.html
+/.idea
+
