@@ -1,14 +1,12 @@
 .hero {
-    /* height: 555px; */
     background-color: var(--black);
     background-image: url(resul-kaya-xxL1FavYOh0-unsplash-cut.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 
-    --carouselDuration: 0.3s;
-    /*--bounce: cubic-bezier(0, 0.34, 0.57, 1.195);*/
-    --bounce: cubic-bezier(1, 1, 1, 1);
+    --carouselDuration: 0.5s;
+    --slide-in: cubic-bezier(0.25, 0.91, 0.565, 1);
 
     font-family: "Titillium Web", sans-serif;
 }
@@ -39,13 +37,10 @@
 
     .hero-heading {
         font-size: max(20px, calc(100vw * 0.055));
-        /* padding-top: 10px; */
-        /* font-size: 40px; */
     }
 
     .hero-subheading {
         font-size: max(18px, calc(100vw * 0.03));
-        /* font-size: 40px; */
     }
 
     .hero-title-frame {
@@ -54,7 +49,6 @@
 }
 
 .hero-title-frame {
-    /* height: 165px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -64,7 +58,6 @@
 .hero-heading {
     /* featured profile */
     display: table;
-    /* padding: 10px; */
     font-weight: var(--semibold);
     letter-spacing: -0.022em;
     color: var(--white);
@@ -74,7 +67,6 @@
     /* Profile of the Month */
     display: table;
     font-weight: var(--regular);
-    /* font-size: 28px; */
     text-align: center;
     text-transform: uppercase;
 }
@@ -95,12 +87,6 @@
     background-color: black;
 }
 
-/* .profile-card video,
-.profile-card img {
-  width: 586px;
-  height: 330px;
-} */
-
 .card-media {
     position: absolute;
     z-index: 2;
@@ -117,20 +103,6 @@
     left: auto;
     right: 0;
 }
-
-/* .middle-card-image:active {
-  animation: mid-img-slide-right 0.3s var(--bounce) 1 forwards;
-}
-@keyframes mid-img-slide-right {
-  0% {
-    left: auto;
-    right: calc((960px - 586px));
-  }
-  100% {
-    left: auto;
-    right: 0px;
-  }
-} */
 
 .profile-card.left {
     left: 0;
@@ -160,7 +132,6 @@
 }
 
 .profile-card.middle {
-    /* display: none; */
     z-index: 6;
 }
 
@@ -169,37 +140,6 @@
     filter: brightness(35%) blur(3px);
     z-index: 0;
 }
-
-/*.profile-card.middle:active {*/
-/*    !* left: calc((100vw - 960px) / 2); *!*/
-/*    !* animation: mid-to-left 0.3s var(--bounce) 1 forwards, *!*/
-/*    animation: mid-to-right 0.3s var(--bounce) 1 forwards,*/
-/*    front-to-side 0.3s var(--bounce) 1 forwards;*/
-/*}*/
-
-/*.profile-card.back:active {*/
-/*    !* left: calc((100vw - 960px) / 2); *!*/
-/*    animation: mid-to-right 0.3s var(--bounce) 1 forwards,*/
-/*    back-to-side 0.3s var(--bounce) 1 forwards;*/
-/*}*/
-
-/*.profile-card.left:active {*/
-/*    animation: left-to-mid 0.3s var(--bounce) 1 forwards,*/
-/*    side-to-back 0.3s var(--bounce) 1 forwards;*/
-/*}*/
-
-/*.profile-card.right:active {*/
-/*    animation: right-to-mid 0.3s var(--bounce) 1 forwards,*/
-/*    side-to-front 0.3s var(--bounce) 1 forwards;*/
-/*}*/
-
-/*.card-media.right:active {*/
-/*    animation: img-right-to-left 0.3s var(--bounce) 1 forwards;*/
-/*}*/
-
-/*.card-media.middle:active {*/
-/*    animation: img-left-to-right 0.3s var(--bounce) 1 forwards;*/
-/*}*/
 
 @keyframes img-right-to-left {
     0% {
@@ -277,14 +217,11 @@
 @keyframes left-to-mid {
     0% {
         left: 0;
-        /* flex-direction: row-reverse; */
         transform: scale(0.75);
     }
     100% {
-        /* left: calc((100vw - 960px) / 2); */
         left: calc(50% - (960px / 2));
         transform: scale(1);
-        /* filter: brightness(100%) blur(0px); */
     }
 }
 
@@ -295,7 +232,6 @@
         transform: scale(1);
     }
     100% {
-        /* left: calc((100vw - 960px) / 2); */
         left: 0;
         transform: scale(0.75);
     }
@@ -304,11 +240,9 @@
 @keyframes right-to-mid {
     0% {
         right: 0;
-        /*transform: scale(0.75);*/
     }
     100% {
         right: calc(50% - (960px / 2));
-        /*transform: scale(1);*/
     }
 }
 
@@ -325,6 +259,15 @@
     }
 }
 
+/*.profile-card video,*/
+.videojs-container {
+    background-color: black;
+}
+
+.profile-card img {
+    object-fit: contain;
+}
+
 @media (max-width: 960px) {
     .profile-card.left,
     .profile-card.back,
@@ -334,9 +277,7 @@
 
     .profile-card.middle {
         box-sizing: border-box;
-        /* width: 100vw; */
         position: static;
-        /* width: 98vw; */
         width: auto;
         height: auto;
     }
@@ -346,11 +287,12 @@
         position: static;
     }
 
-    .profile-card video,
-    .profile-card img {
+    .profile-card img,
+    div.videojs-container {
         width: 98vw;
         height: auto;
     }
+
 }
 
 @media (min-width: 960px) {
@@ -361,8 +303,9 @@
         height: 330px;
     }
 
-    .profile-card video,
-    .profile-card img {
+    /*.profile-card video,*/
+    .profile-card img,
+    div.videojs-container {
         width: 586px;
         height: 330px;
     }

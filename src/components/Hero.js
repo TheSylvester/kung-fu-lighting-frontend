@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { profilesService } from "../services/profiles";
+import VideoJS from "./VideoJS";
+// import videojs from "video.js";
+// import "video.js/dist/video-js.css";
 
 const prevIndex = (i, max) => (i - 1 >= 0 ? i - 1 : max);
 const nextIndex = (i, max) => (i + 1 <= max ? i + 1 : 0);
@@ -37,7 +40,6 @@ const Hero = () => {
   useEffect(() => {
     const fetchFeaturedProfiles = async () => {
       const response = await profilesService.get(); // alter this call for featured profiles
-      // console.log(response);
       setFeaturedProfiles(response);
     };
 
@@ -47,11 +49,10 @@ const Hero = () => {
   // guard clause for featuredProfiles not loaded / not loadable
   if (featuredProfiles === [] || featuredProfiles.length < 1) return null;
 
-  console.log(featuredProfiles);
-
-  // banner and side profiles determined from useEffect and states
+  // maxIndex from the total # of profiles on the list
   const maxIndex = featuredProfiles.length - 1;
 
+  // populate profiles data
   const middleProfile = populateProfile(featuredProfiles[selectedIndex]);
   const leftProfile = populateProfile(
     featuredProfiles[prevIndex(selectedIndex, maxIndex)]
@@ -63,27 +64,71 @@ const Hero = () => {
     featuredProfiles[nextIndex(nextIndex(selectedIndex, maxIndex), maxIndex)]
   );
 
-  const ColourPalettes = ({ colours }) =>
-    colours.map((x) => (
-      <div key={String(x)} style={{ backgroundColor: String(x) }}></div>
-    ));
-  const MapArrayToDivs = ({ array }) =>
-    array.map((x) => <div key={x}>{x}</div>);
-
   const ProfileCard = ({ profile, position, onClick }) => {
     // CardMedia in the middle is a video, but everywhere else is Thumbnail only
+
+    const playerRef = useRef(null); // ref to the Video.js player
+
+    useEffect(() => {}, []);
+
+    const ColourPalettes = ({ colours }) =>
+      colours.map((x) => (
+        <div key={String(x)} style={{ backgroundColor: String(x) }}></div>
+      ));
+    const MapArrayToDivs = ({ array }) =>
+      array.map((x) => <div key={x}>{x}</div>);
+
+    const handleHover = () => {
+      if (position !== "middle") return;
+
+      const player = playerRef.current;
+      if (player) {
+        player.mute(false);
+        // player.pause();
+        // alert("yo");
+      }
+    };
+
+    const handlePlayerReady = (player) => {
+      playerRef.current = player;
+      // You can handle player events here, for example:
+      player.on("waiting", () => {
+        // videojs.log("player is waiting");
+      });
+
+      player.on("dispose", () => {
+        // videojs.log("player will dispose");
+      });
+    };
+
+    const videoJsOptions = {
+      controls: true,
+      poster: profile.thumbnail,
+      loop: true,
+      autoplay: true,
+      muted: true,
+      fluid: true,
+      sources: [
+        // {
+        //   // ** sample HLS url **
+        //   src: `https://v.redd.it/vvc6qvdm7ob51/HLSPlaylist.m3u8?a=1658786138%2CMzRhNGUxMTg2OGFmMjc3Y2U1YWM2NTk3MTcyZDdhOTQ2OGYyOWE4MmFjZWMwMTgxZDUyNDY3MTRkMDQ1NjJiNA%3D%3D&amp;v=1&amp;f=sd`,
+        //   type: "application/vnd.apple.mpegurl"
+        // },
+        {
+          src: profile.videoURL,
+          type: "video/mp4"
+        }
+      ]
+    };
+
     const CardMedia = () =>
       position === "middle" ? (
-        <video
+        <VideoJS
           className="card-media middle"
           style={animMediaOnCarousel()}
-          poster={profile.thumbnail}
-          controls
-          loop
-          autoPlay
-        >
-          <source src={profile.videoURL} />
-        </video>
+          options={videoJsOptions}
+          onReady={handlePlayerReady}
+        />
       ) : (
         <img
           className={["card-media", position].join(" ")}
@@ -99,11 +144,11 @@ const Hero = () => {
     const animMediaOnCarousel = () => {
       const animImgRightToLeft = {
         animation:
-          "img-right-to-left var(--carouselDuration) var(--bounce) 1 forwards"
+          "img-right-to-left var(--carouselDuration) var(--slide-in) 1 forwards"
       };
       const animImgLeftToRight = {
         animation:
-          "img-left-to-right var(--carouselDuration) var(--bounce) 1 forwards"
+          "img-left-to-right var(--carouselDuration) var(--slide-in) 1 forwards"
       };
 
       if (position === "right" && carouselNextMoving) {
@@ -131,63 +176,55 @@ const Hero = () => {
       // guard clause if nothing is moving don't animate
       if (!carouselNextMoving && !carouselPrevMoving) return {};
 
-      const possibilities = carouselNextMoving
-        ? {
-            right: {
-              animation:
-                "right-to-mid var(--carouselDuration) var(--bounce) 1 forwards, side-to-front var(--carouselDuration) var(--bounce) 1 forwards"
-            },
-            middle: {
-              animation:
-                "mid-to-left var(--carouselDuration) var(--bounce) 1 forwards, front-to-side var(--carouselDuration) var(--bounce) 1 forwards"
-            },
-            left: {
-              animation:
-                "left-to-mid var(--carouselDuration) var(--bounce) 1 forwards, side-to-back var(--carouselDuration) var(--bounce) 1 forwards"
-            },
-            back: {
-              animation:
-                "mid-to-right var(--carouselDuration) var(--bounce) 1 forwards, back-to-side var(--carouselDuration) var(--bounce) 1 forwards"
-            }
-          }
-        : /* carouselPrevMoving */
-          {
-            left: {
-              animation:
-                "left-to-mid var(--carouselDuration) var(--bounce) 1 forwards, side-to-front var(--carouselDuration) var(--bounce) 1 forwards"
-            },
-            middle: {
-              animation:
-                "mid-to-right var(--carouselDuration) var(--bounce) 1 forwards, front-to-side var(--carouselDuration) var(--bounce) 1 forwards"
-            },
-            right: {
-              animation:
-                "right-to-mid var(--carouselDuration) var(--bounce) 1 forwards, side-to-back var(--carouselDuration) var(--bounce) 1 forwards"
-            },
-            back: {
-              animation:
-                "mid-to-left var(--carouselDuration) var(--bounce) 1 forwards, back-to-side var(--carouselDuration) var(--bounce) 1 forwards"
-            }
-          };
+      const animationOptions = `var(--carouselDuration) var(--slide-in) 1 forwards`;
 
-      return possibilities[position];
+      const animations = {
+        next: {
+          right: {
+            animation: `right-to-mid ${animationOptions}, side-to-front ${animationOptions}`
+          },
+          middle: {
+            animation: `mid-to-left ${animationOptions}, front-to-side ${animationOptions}`
+          },
+          left: {
+            animation: `left-to-mid ${animationOptions}, side-to-back ${animationOptions}`
+          },
+          back: {
+            animation: `mid-to-right ${animationOptions}, back-to-side ${animationOptions}`
+          }
+        },
+        prev: {
+          left: {
+            animation: `left-to-mid ${animationOptions}, side-to-front ${animationOptions}`
+          },
+          middle: {
+            animation: `mid-to-right ${animationOptions}, front-to-side ${animationOptions}`
+          },
+          right: {
+            animation: `right-to-mid ${animationOptions}, side-to-back ${animationOptions}`
+          },
+          back: {
+            animation: `mid-to-left ${animationOptions}, back-to-side ${animationOptions}`
+          }
+        }
+      };
+
+      return animations[carouselNextMoving ? "next" : "prev"][position];
     };
 
     const animEnd = () => {
       // guard clause
-      if (!carouselNextMoving && !carouselPrevMoving) return {};
+      if (!carouselNextMoving && !carouselPrevMoving) return;
 
-      return () => {
-        /* finally change the banner after animation is over */
-        if (carouselNextMoving)
-          setSelectedIndex(nextIndex(selectedIndex, maxIndex));
-        if (carouselPrevMoving)
-          setSelectedIndex(prevIndex(selectedIndex, maxIndex));
+      /* finally change the banner after animation is over */
+      if (carouselNextMoving)
+        setSelectedIndex(nextIndex(selectedIndex, maxIndex));
+      if (carouselPrevMoving)
+        setSelectedIndex(prevIndex(selectedIndex, maxIndex));
 
-        /* remove animated states */
-        setCarouselNextMoving(false);
-        setCarouselPrevMoving(false);
-      };
+      /* remove animated states */
+      setCarouselNextMoving(false);
+      setCarouselPrevMoving(false);
     };
 
     return (
@@ -195,7 +232,8 @@ const Hero = () => {
         className={["profile-card", position].join(" ")}
         onClick={onClick}
         style={animCardOnCarousel()}
-        onAnimationEnd={animEnd()}
+        onAnimationEnd={animEnd}
+        onMouseEnter={handleHover}
       >
         <CardMedia profile={leftProfile} position={position} />
         <div className="infopanel large">
@@ -235,11 +273,9 @@ const Hero = () => {
   // * Sets carouselPrevMoving = true so that the render() will
   // * add css animation and onanimationend=carouselPrevEnd
   const carouselPrev = () => {
-    console.log("clicked left");
     setCarouselPrevMoving(true);
   };
   const carouselNext = () => {
-    console.log(`clicked right`);
     setCarouselNextMoving(true);
   };
 
