@@ -68,11 +68,20 @@
     font-family: "Titillium Web", sans-serif;
 }
 
-.info-title {
+.info-title,
+.info-title a:link,
+.info-title a:visited {
     font-size: 18px;
     line-height: 100%;
     letter-spacing: -0.025em;
     color: var(--white);
+    text-decoration: none;
+}
+
+.info-title a:hover {
+    color: var(--green);
+    text-decoration: underline;
+    transition: 0.3s;
 }
 
 .info-author-by {
@@ -134,14 +143,24 @@ div.like-and-download span {
     align-items: center;
 }
 
-div.like-and-download span span {
+div.like-and-download span span,
+a.icon-button:link,
+a.icon-button:visited {
     font-family: "Roboto", sans-serif;
     font-size: 16px;
     font-weight: var(--regular);
+    color: var(--white);
+    text-decoration: none;
 }
 
-.icon-button {
+i.icon-button {
     font-size: 24px;
     line-height: 100%;
     color: var(--green);
 }
+
+a.icon-button:hover {
+    transform: scale(1.2, 1.2);
+    transition: 0.1s;
+}
+

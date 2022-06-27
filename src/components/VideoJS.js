@@ -69,7 +69,7 @@ export const VideoJS = (props) => {
   return (
     <div
       id="videojs-banner"
-      className={["videojs-container", "vjs-big-play-centered", props.className]
+      className={["vjs-big-play-centered", props.className]
         .filter(Boolean)
         .join(" ")}
       style={props.style}

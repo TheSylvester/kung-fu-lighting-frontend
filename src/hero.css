@@ -260,7 +260,7 @@
 }
 
 /*.profile-card video,*/
-.videojs-container {
+.videojs-hero-banner {
     background-color: black;
 }
 
@@ -288,7 +288,7 @@
     }
 
     .profile-card img,
-    div.videojs-container {
+    div.videojs-hero-banner {
         width: 98vw;
         height: auto;
     }
@@ -305,7 +305,7 @@
 
     /*.profile-card video,*/
     .profile-card img,
-    div.videojs-container {
+    div.videojs-hero-banner {
         width: 586px;
         height: 330px;
     }

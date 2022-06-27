@@ -1,3 +1,7 @@
+import { useState, useEffect } from "react";
+import { profilesService } from "../services/profiles";
+import VideoJS from "./VideoJS";
+
 const ProfilesSearch = () => {
   return (
     <section id="profiles" className="profiles-search image-background">
@@ -51,20 +55,63 @@ const SearchBars = () => {
 
 const Profile = ({
   thumbnail = "",
+  videoURL = "",
   title = "",
+  link = "",
   OP = "",
   colours = [],
   likes = 0,
-  downloads = 0
+  downloads = 0,
+  downloadURL = ""
 }) => {
+  const [active, setActive] = useState(false);
+
+  const handleHoverEnter = () => setActive(true);
+  const handleHoverLeave = () => setActive(false);
+
+  const CardMedia = () => {
+    const videoJsOptions = {
+      controls: true,
+      poster: thumbnail,
+      loop: true,
+      autoplay: true,
+      muted: true,
+      fluid: true,
+      sources: [
+        // {
+        //   // ** sample HLS url **
+        //   src: `https://v.redd.it/vvc6qvdm7ob51/HLSPlaylist.m3u8?a=1658786138%2CMzRhNGUxMTg2OGFmMjc3Y2U1YWM2NTk3MTcyZDdhOTQ2OGYyOWE4MmFjZWMwMTgxZDUyNDY3MTRkMDQ1NjJiNA%3D%3D&amp;v=1&amp;f=sd`,
+        //   type: "application/vnd.apple.mpegurl"
+        // },
+        {
+          src: videoURL,
+          type: "video/mp4"
+        }
+      ]
+    };
+
+    const img = <img alt="profile video" src={thumbnail} />;
+    const video = <VideoJS options={videoJsOptions} />;
+
+    return active ? video : img;
+  };
+
   return (
-    <div className="profile">
+    <div
+      className="profile"
+      onMouseEnter={handleHoverEnter}
+      onMouseLeave={handleHoverLeave}
+    >
       <div className="video-box">
-        <img alt="profile video" src={thumbnail} />
+        <CardMedia />
       </div>
       <div className="infopanel small">
         <div className="info-titlebox">
-          <h5 className="info-title">{title}</h5>
+          <h5 className="info-title">
+            <a href={link} target="_blank" rel="noreferrer">
+              {title}
+            </a>
+          </h5>
           <div className="info-author">
             <span className="info-author-by">by</span>
             <span className="info-author-name">{OP}</span>
@@ -72,7 +119,7 @@ const Profile = ({
         </div>
         <div className="colour-palette-section">
           {colours.map((x) => (
-            <div key={x} style={{ backgroundColor: x }}></div>
+            <div key={x} style={{ backgroundColor: String(x) }}></div>
           ))}
         </div>
         <div className="like-and-download">
@@ -80,10 +127,17 @@ const Profile = ({
             <i className="fa-regular fa-thumbs-up icon-button"></i>
             <span>{likes}</span>
           </span>
-          <span>
-            <i className="fa-solid fa-download icon-button"></i>
-            <span>{downloads}</span>
-          </span>
+          <a
+            className="icon-button"
+            href={downloadURL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>
+              <i className="fa-solid fa-download icon-button"></i>
+              <span>{downloads}</span>
+            </span>
+          </a>
         </div>
       </div>
     </div>
@@ -91,49 +145,51 @@ const Profile = ({
 };
 
 const ProfilesGallery = () => {
+  const [profiles, setProfiles] = useState([]);
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      const response = await profilesService.get();
+      if (response && Array.isArray(response)) setProfiles(response);
+    };
+    fetchProfiles().then(); // actually activate the useEffect
+  }, []);
+
+  const ProfilesList = () => {
+    // guard clause for empty gallery list
+    if (!Array.isArray(profiles) || profiles.length === 0)
+      return (
+        <div
+          style={{
+            margin: "auto auto",
+            color: "var(--green)",
+            border: "1px solid var(--green)"
+          }}
+        >
+          no profiles to display
+        </div>
+      );
+
+    return profiles.map((profile) => (
+      <Profile
+        key={profile.id36}
+        thumbnail={profile.thumbnail}
+        videoURL={profile.videoURL}
+        title={profile.title}
+        link={profile.link}
+        OP={profile.OP}
+        colours={profile.profiles[0].colours}
+        likes={profile.score}
+        downloads={profile.score}
+        downloadURL={profile.profiles[0].link}
+      />
+    ));
+  };
+
   return (
     <section className="profiles-gallery">
       <div className="profiles-frame animate-entrance delay-0">
-        <Profile
-          thumbnail="https://b.thumbs.redditmedia.com/4WPi0Dr_RUj11vhuitdRNZpkZ9Bmh_5Iyk28wVEIXDg.jpg"
-          title="My Remix of the popular Synthwave Sunset Chroma Profile"
-          OP="Flamesilver"
-          colours={["cyan", "purple", "fuchsia"]}
-          likes="132"
-          downloads="459"
-        />
-        <Profile
-          thumbnail="https://b.thumbs.redditmedia.com/jbads6PirkeJbe4yx0DZcaEFOcefOO101l2XdjzsmHw.jpg"
-          title="My Remix of the popular Synthwave Sunset Chroma Profile"
-          OP="Flamesilver"
-          colours={["red", "yellow", "green"]}
-          likes="132"
-          downloads="459"
-        />
-        <Profile
-          thumbnail="https://b.thumbs.redditmedia.com/pfKZVheI_8RoW-aVGI6sAtY-rtEbZNKjQDmla6zXKuQ.jpg"
-          title="My Remix of the popular Synthwave Sunset Chroma Profile"
-          OP="Flamesilver"
-          colours={["red", "yellow", "green", "cyan", "purple", "fuchsia"]}
-          likes="132"
-          downloads="459"
-        />
-        <Profile
-          thumbnail="https://b.thumbs.redditmedia.com/jbads6PirkeJbe4yx0DZcaEFOcefOO101l2XdjzsmHw.jpg"
-          title="My Remix of the popular Synthwave Sunset Chroma Profile"
-          OP="Flamesilver"
-          colours={["red", "yellow", "green", "cyan", "purple", "fuchsia"]}
-          likes="132"
-          downloads="459"
-        />
-        <Profile
-          thumbnail="https://b.thumbs.redditmedia.com/nQKrMoz15vvoiPK2M_kXpk9E5xoOmj_eWQy9VQ_UV6c.jpg"
-          title="My Remix of the popular Synthwave Sunset Chroma Profile"
-          OP="Flamesilver"
-          colours={["red", "yellow", "green", "cyan", "purple", "fuchsia"]}
-          likes="132"
-          downloads="459"
-        />
+        <ProfilesList />
       </div>
     </section>
   );

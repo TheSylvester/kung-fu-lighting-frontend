@@ -40,7 +40,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchFeaturedProfiles = async () => {
       const response = await profilesService.get(); // alter this call for featured profiles
-      setFeaturedProfiles(response);
+      if (response && Array.isArray(response)) setFeaturedProfiles(response);
     };
 
     fetchFeaturedProfiles().then();
@@ -113,7 +113,7 @@ const Hero = () => {
     const CardMedia = () =>
       position === "middle" ? (
         <VideoJS
-          className="card-media middle"
+          className="card-media middle videojs-hero-banner"
           style={animMediaOnCarousel()}
           options={videoJsOptions}
           onReady={handlePlayerReady}
