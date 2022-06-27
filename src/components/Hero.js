@@ -78,17 +78,6 @@ const Hero = () => {
     const MapArrayToDivs = ({ array }) =>
       array.map((x) => <div key={x}>{x}</div>);
 
-    const handleHover = () => {
-      if (position !== "middle") return;
-
-      const player = playerRef.current;
-      if (player) {
-        player.mute(false);
-        // player.pause();
-        // alert("yo");
-      }
-    };
-
     const handlePlayerReady = (player) => {
       playerRef.current = player;
       // You can handle player events here, for example:
@@ -233,7 +222,6 @@ const Hero = () => {
         onClick={onClick}
         style={animCardOnCarousel()}
         onAnimationEnd={animEnd}
-        onMouseEnter={handleHover}
       >
         <CardMedia profile={leftProfile} position={position} />
         <div className="infopanel large">
