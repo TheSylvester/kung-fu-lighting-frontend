@@ -212,6 +212,7 @@ input:focus {
 
 .profile {
     border: 1px solid var(--dark);
+    background-color: var(--black);
     box-sizing: border-box;
 }
 
@@ -230,7 +231,7 @@ input:focus {
 @media (min-width: 380px) {
     .video-box {
         width: 380px;
-        height: 240px;
+        height: 214px;
         z-index: 1;
     }
 }

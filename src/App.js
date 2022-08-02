@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import "./testpage.css";
 import "https://kit.fontawesome.com/ddca20bf1d.js";
-// import redditscrapeService from "./services/redditscrapes";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import {
@@ -11,7 +10,6 @@ import {
   SearchBars,
   ProfilesGallery
 } from "./components/Profiles";
-// import { profilesService } from "./services/profiles";
 
 /* eslint-disable */
 

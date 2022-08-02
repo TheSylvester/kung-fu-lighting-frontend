@@ -28,21 +28,7 @@ export const VideoJS = (props) => {
 
       player.ready(() => {
         // videojs.log("player is ready");
-        // try to play
         onReady && onReady(player);
-        let promise = player.play();
-        if (promise === undefined) {
-          playButton.show(); // can't even play, then show the button
-        } else {
-          promise.then(
-            () => {
-              playButton.show(); // show button if play() runs
-            },
-            () => {
-              playButton.show(); // show button if play() fails
-            }
-          );
-        }
       });
 
       // You could update an existing player in the `else` block here
@@ -69,12 +55,13 @@ export const VideoJS = (props) => {
   return (
     <div
       id="videojs-banner"
-      className={["vjs-big-play-centered", props.className]
-        .filter(Boolean)
-        .join(" ")}
+      className={[props.className].filter(Boolean).join(" ")}
       style={props.style}
     >
-      <video ref={videoRef} className="video-js vjs-16-9" />
+      <video
+        ref={videoRef}
+        className="video-js vjs-16-9 vjs-big-play-centered"
+      />
     </div>
   );
 };

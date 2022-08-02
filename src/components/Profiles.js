@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { profilesService } from "../services/profiles";
+import { useMemo, useState } from "react";
 import VideoJS from "./VideoJS";
+import useQueryProfileDB from "../hooks/QueryProfileDB";
+import colourSort from "color-sorter";
 
 const ProfilesSearch = () => {
   return (
@@ -71,7 +72,7 @@ const Profile = ({
 
   const CardMedia = () => {
     const videoJsOptions = {
-      controls: true,
+      controls: false,
       poster: thumbnail,
       loop: true,
       autoplay: true,
@@ -118,7 +119,7 @@ const Profile = ({
           </div>
         </div>
         <div className="colour-palette-section">
-          {colours.map((x) => (
+          {colours.sort(colourSort.sortFn).map((x) => (
             <div key={x} style={{ backgroundColor: String(x) }}></div>
           ))}
         </div>
@@ -145,15 +146,8 @@ const Profile = ({
 };
 
 const ProfilesGallery = () => {
-  const [profiles, setProfiles] = useState([]);
-
-  useEffect(() => {
-    const fetchProfiles = async () => {
-      const response = await profilesService.get();
-      if (response && Array.isArray(response)) setProfiles(response);
-    };
-    fetchProfiles().then(); // actually activate the useEffect
-  }, []);
+  const query = useMemo(() => ({}), []);
+  const profiles = useQueryProfileDB(query);
 
   const ProfilesList = () => {
     // guard clause for empty gallery list
@@ -178,10 +172,10 @@ const ProfilesGallery = () => {
         title={profile.title}
         link={profile.link}
         OP={profile.OP}
-        colours={profile.profiles[0].colours}
-        likes={profile.score}
+        colours={profile.lightingeffects[0].colours}
+        likes={profile.score + profile.local_likes}
         downloads={profile.score}
-        downloadURL={profile.profiles[0].link}
+        downloadURL={profile.download_link}
       />
     ));
   };

@@ -1,27 +1,32 @@
-import { useState, useEffect, useRef } from "react";
-import { profilesService } from "../services/profiles";
+import { useState, useRef, useMemo } from "react";
+import useQueryProfileDB from "../hooks/QueryProfileDB";
 import VideoJS from "./VideoJS";
-// import videojs from "video.js";
-// import "video.js/dist/video-js.css";
+import colourSort from "color-sorter";
 
 const prevIndex = (i, max) => (i - 1 >= 0 ? i - 1 : max);
 const nextIndex = (i, max) => (i + 1 <= max ? i + 1 : 0);
 
 const populateProfile = (rawProfile) => {
-  const videoURL = rawProfile.videoURL;
+  const featured_description = rawProfile.tags.find(
+    (x) => x.tag === "featured"
+  ).description;
+  const videoURL = rawProfile.hlsURL;
   const thumbnail = rawProfile.thumbnail;
   const title = rawProfile.title;
+  const link = rawProfile.link;
   const OP = rawProfile.OP;
-  const colours = rawProfile.profiles[0].colours;
-  const devices = rawProfile.profiles[0].devices;
-  const effects = rawProfile.profiles[0].effects;
-  const likes = rawProfile.score;
-  const downloads = rawProfile.score;
+  const colours = rawProfile.lightingeffects[0].colours.sort(colourSort.sortFn);
+  const devices = rawProfile.lightingeffects[0].devices;
+  const effects = rawProfile.lightingeffects[0].effects;
+  const likes = rawProfile.score + rawProfile.local_likes;
+  const downloads = rawProfile.score + rawProfile.local_likes;
 
   return {
+    featured_description,
     videoURL,
     thumbnail,
     title,
+    link,
     OP,
     colours,
     devices,
@@ -32,19 +37,12 @@ const populateProfile = (rawProfile) => {
 };
 
 const Hero = () => {
-  const [featuredProfiles, setFeaturedProfiles] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [carouselNextMoving, setCarouselNextMoving] = useState(false);
   const [carouselPrevMoving, setCarouselPrevMoving] = useState(false);
 
-  useEffect(() => {
-    const fetchFeaturedProfiles = async () => {
-      const response = await profilesService.get(); // alter this call for featured profiles
-      if (response && Array.isArray(response)) setFeaturedProfiles(response);
-    };
-
-    fetchFeaturedProfiles().then();
-  }, []);
+  const query = useMemo(() => ({ tag: "featured" }), []);
+  const featuredProfiles = useQueryProfileDB(query);
 
   // guard clause for featuredProfiles not loaded / not loadable
   if (featuredProfiles === [] || featuredProfiles.length < 1) return null;
@@ -69,8 +67,6 @@ const Hero = () => {
 
     const playerRef = useRef(null); // ref to the Video.js player
 
-    useEffect(() => {}, []);
-
     const ColourPalettes = ({ colours }) =>
       colours.map((x) => (
         <div key={String(x)} style={{ backgroundColor: String(x) }}></div>
@@ -91,7 +87,7 @@ const Hero = () => {
     };
 
     const videoJsOptions = {
-      controls: true,
+      controls: false,
       poster: profile.thumbnail,
       loop: true,
       autoplay: true,
@@ -105,7 +101,8 @@ const Hero = () => {
         // },
         {
           src: profile.videoURL,
-          type: "video/mp4"
+          // type: "video/mp4"
+          type: "application/vnd.apple.mpegurl"
         }
       ]
     };
@@ -226,7 +223,11 @@ const Hero = () => {
         <CardMedia profile={leftProfile} position={position} />
         <div className="infopanel large">
           <div className="info-titlebox">
-            <h5 className="info-title">{profile.title}</h5>
+            <h5 className="info-title">
+              <a href={profile.link} target="_blank" rel="noreferrer">
+                {profile.title}
+              </a>
+            </h5>
             <div className="info-author">
               <span className="info-author-by">by</span>
               <span className="info-author-name">{profile.OP}</span>
@@ -274,7 +275,7 @@ const Hero = () => {
           FEATURED PROFILE
         </h1>
         <h3 className="hero-subheading float-shadow-text chroma-gradient animate-entrance pop delay-1">
-          PROFILE OF THE MONTH
+          {middleProfile.featured_description}
         </h3>
       </div>
       <div className="hero-banner-frame animate-entrance delay-7 float-shadow">

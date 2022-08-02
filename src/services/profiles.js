@@ -13,17 +13,3 @@ const get = async (props) => {
 };
 
 export const profilesService = { get };
-
-/******* test code  */
-// profilesService
-//   .get({ colours: "#ffffff" })
-//   .then((posts) => {
-//     console.log(posts.profiles.colours.find((s) => s === "#ffffff"));
-//   })
-//   .catch((e) => {
-//     console.log("ERROR!!!!!!!!!!! ", e);
-//   });
-
-/*** test code */
-
-// export default profilesService;

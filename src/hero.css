@@ -306,7 +306,7 @@
     /*.profile-card video,*/
     .profile-card img,
     div.videojs-hero-banner {
-        width: 586px;
-        height: 330px;
+        width: 586px !important;
+        height: 330px !important;
     }
 }
