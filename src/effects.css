@@ -21,7 +21,6 @@
     -webkit-text-fill-color: transparent;
     /*noinspection CssInvalidPropertyValue*/
     background-clip: text;
-    text-fill-color: transparent;
     /*background-size: 400% 400%; */
     animation: gradient 1s ease;
 }

@@ -2,6 +2,7 @@ import { useState, useRef, useMemo } from "react";
 import useQueryProfileDB from "../hooks/QueryProfileDB";
 import VideoJS from "./VideoJS";
 import colourSort from "color-sorter";
+import useIndexCount from "../hooks/IndexCount";
 
 const prevIndex = (i, max) => (i - 1 >= 0 ? i - 1 : max);
 const nextIndex = (i, max) => (i + 1 <= max ? i + 1 : 0);
@@ -14,12 +15,10 @@ const populateProfile = (rawProfile) => {
   const thumbnail = rawProfile.thumbnail;
   const title = rawProfile.title;
   const link = rawProfile.link;
+  const downloadURL = rawProfile.download_link;
   const OP = rawProfile.OP;
-  const colours = rawProfile.lightingeffects[0].colours.sort(colourSort.sortFn);
-  const devices = rawProfile.lightingeffects[0].devices;
-  const effects = rawProfile.lightingeffects[0].effects;
+  const lightingeffects = rawProfile.lightingeffects; // provide all profiles
   const likes = rawProfile.score + rawProfile.local_likes;
-  const downloads = rawProfile.score + rawProfile.local_likes;
 
   return {
     featured_description,
@@ -27,12 +26,10 @@ const populateProfile = (rawProfile) => {
     thumbnail,
     title,
     link,
+    downloadURL,
     OP,
-    colours,
-    devices,
-    effects,
-    likes,
-    downloads
+    lightingeffects,
+    likes
   };
 };
 
@@ -123,6 +120,78 @@ const Hero = () => {
           alt={`${position} pic`}
         />
       );
+
+    const CardInfopanel = () => {
+      const [profileIndex, moveProfileIndex] = useIndexCount(
+        profile.lightingeffects.length
+      );
+      return (
+        <div className="infopanel large">
+          <div
+            className="info-page-button"
+            onClick={() => moveProfileIndex(-1)}
+          >
+            {profile.lightingeffects.length > 1 ? "<" : ""}
+          </div>
+          <div className="info-frame">
+            <div className="info-titlebox">
+              <h5 className="info-title">
+                <a href={profile.link} target="_blank" rel="noreferrer">
+                  {profile.title}
+                </a>
+              </h5>
+              <div className="info-author">
+                <span className="profile-name">
+                  {profile.lightingeffects[profileIndex].name}
+                </span>
+                <span className="info-author-by">by</span>
+                <span className="info-author-name">{profile.OP}</span>
+              </div>
+            </div>
+            <div className="colour-palette-section">
+              <span className="profile-name">{}</span>
+              <ColourPalettes
+                colours={profile.lightingeffects[profileIndex].colours.sort(
+                  colourSort.sortFn
+                )}
+              />
+            </div>
+            <div className="all-tags-frame">
+              <div className="tags-frame devices">
+                <MapArrayToDivs
+                  array={profile.lightingeffects[profileIndex].devices}
+                />
+              </div>
+              <div className="tags-frame">
+                <MapArrayToDivs
+                  array={profile.lightingeffects[profileIndex].effects}
+                />
+              </div>
+            </div>
+            <div className="like-and-download">
+              <span>
+                <i className="fa-regular fa-thumbs-up icon-button"></i>
+                <span>{profile.likes}</span>
+              </span>
+              <a
+                className="icon-button"
+                href={profile.downloadURL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>
+                  <i className="fa-solid fa-download icon-button"></i>
+                  <span>download</span>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div className="info-page-button" onClick={() => moveProfileIndex(1)}>
+            {profile.lightingeffects.length > 1 ? ">" : ""}
+          </div>
+        </div>
+      );
+    };
 
     /**
      * returns dynamic style for animation for slide
@@ -220,41 +289,8 @@ const Hero = () => {
         style={animCardOnCarousel()}
         onAnimationEnd={animEnd}
       >
-        <CardMedia profile={leftProfile} position={position} />
-        <div className="infopanel large">
-          <div className="info-titlebox">
-            <h5 className="info-title">
-              <a href={profile.link} target="_blank" rel="noreferrer">
-                {profile.title}
-              </a>
-            </h5>
-            <div className="info-author">
-              <span className="info-author-by">by</span>
-              <span className="info-author-name">{profile.OP}</span>
-            </div>
-          </div>
-          <div className="colour-palette-section">
-            <ColourPalettes colours={profile.colours} />
-          </div>
-          <div className="all-tags-frame">
-            <div className="tags-frame">
-              <MapArrayToDivs array={profile.devices} />
-            </div>
-            <div className="tags-frame">
-              <MapArrayToDivs array={profile.effects} />
-            </div>
-          </div>
-          <div className="like-and-download">
-            <span>
-              <i className="fa-regular fa-thumbs-up icon-button"></i>
-              <span>{profile.likes}</span>
-            </span>
-            <span>
-              <i className="fa-solid fa-download icon-button"></i>
-              <span>{profile.downloads}</span>
-            </span>
-          </div>
-        </div>
+        <CardMedia profile={middleProfile} position={position} />
+        <CardInfopanel />
       </div>
     );
   };

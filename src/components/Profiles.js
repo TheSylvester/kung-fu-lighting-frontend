@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import VideoJS from "./VideoJS";
 import useQueryProfileDB from "../hooks/QueryProfileDB";
 import colourSort from "color-sorter";
+import useIndexCount from "../hooks/IndexCount";
 
 const ProfilesSearch = () => {
   return (
@@ -60,9 +61,8 @@ const Profile = ({
   title = "",
   link = "",
   OP = "",
-  colours = [],
+  lightingeffects = [],
   likes = 0,
-  downloads = 0,
   downloadURL = ""
 }) => {
   const [active, setActive] = useState(false);
@@ -96,6 +96,65 @@ const Profile = ({
 
     return active ? video : img;
   };
+  const CardInfoppanel = () => {
+    const [profileIndex, moveProfileIndex] = useIndexCount(
+      lightingeffects.length
+    );
+
+    return (
+      <div className="infopanel small">
+        <div className="info-page-button" onClick={() => moveProfileIndex(-1)}>
+          {lightingeffects.length > 1 ? "<" : ""}
+        </div>
+        <div className="info-frame">
+          <div className="info-titlebox">
+            <h5 className="info-title">
+              <a href={link} target="_blank" rel="noreferrer">
+                {title}
+              </a>
+            </h5>
+            <div className="info-author">
+              <span className="profile-name">
+                {lightingeffects[profileIndex].name}
+              </span>
+              <span className="info-author-by">by</span>
+              <span className="info-author-name">{OP}</span>
+            </div>
+          </div>
+          <div className="colour-palette-section small">
+            {lightingeffects[profileIndex].colours
+              .sort(colourSort.sortFn)
+              .map((x) => (
+                <div
+                  key={String(x)}
+                  style={{ backgroundColor: String(x) }}
+                ></div>
+              ))}
+          </div>
+          <div className="like-and-download">
+            <span>
+              <i className="fa-regular fa-thumbs-up icon-button"></i>
+              <span>{likes}</span>
+            </span>
+            <a
+              className="icon-button"
+              href={downloadURL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>
+                <i className="fa-solid fa-download icon-button"></i>
+                <span>download</span>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div className="info-page-button" onClick={() => moveProfileIndex(1)}>
+          {lightingeffects.length > 1 ? ">" : ""}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -106,41 +165,7 @@ const Profile = ({
       <div className="video-box">
         <CardMedia />
       </div>
-      <div className="infopanel small">
-        <div className="info-titlebox">
-          <h5 className="info-title">
-            <a href={link} target="_blank" rel="noreferrer">
-              {title}
-            </a>
-          </h5>
-          <div className="info-author">
-            <span className="info-author-by">by</span>
-            <span className="info-author-name">{OP}</span>
-          </div>
-        </div>
-        <div className="colour-palette-section">
-          {colours.sort(colourSort.sortFn).map((x) => (
-            <div key={x} style={{ backgroundColor: String(x) }}></div>
-          ))}
-        </div>
-        <div className="like-and-download">
-          <span>
-            <i className="fa-regular fa-thumbs-up icon-button"></i>
-            <span>{likes}</span>
-          </span>
-          <a
-            className="icon-button"
-            href={downloadURL}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span>
-              <i className="fa-solid fa-download icon-button"></i>
-              <span>{downloads}</span>
-            </span>
-          </a>
-        </div>
-      </div>
+      <CardInfoppanel />
     </div>
   );
 };
@@ -172,9 +197,10 @@ const ProfilesGallery = () => {
         title={profile.title}
         link={profile.link}
         OP={profile.OP}
-        colours={profile.lightingeffects[0].colours}
+        lightingeffects={profile.lightingeffects}
+        // name={profile.lightingeffects[0].name}
+        // colours={profile.lightingeffects[0].colours}
         likes={profile.score + profile.local_likes}
-        downloads={profile.score}
         downloadURL={profile.download_link}
       />
     ));

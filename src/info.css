@@ -1,31 +1,29 @@
 .infopanel {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /*flex-direction: column;*/
+    /*justify-content: space-between;*/
     color: var(--white);
     background-color: var(--black);
     z-index: 2;
+    font-family: "Titillium Web", sans-serif;
 }
 
 .infopanel.small {
-    /* width: 380px; */
-    /* padding: 25px; */
+    flex-grow: 1;
     box-sizing: border-box;
-    gap: 15px;
+    /*gap: 15px;*/
 }
 
 @media (min-width: 380px) {
     .infopanel.small {
         width: 380px;
-        padding: 25px;
+        padding: 25px 0;
     }
 }
 
 @media (max-width: 380px) {
     .infopanel.small {
-        /* border: 5px solid blue; */
         max-width: 90vw;
-        /* width: min-content; */
         margin: 0 auto;
         padding: 5vw 0;
         box-sizing: border-box;
@@ -34,9 +32,32 @@
 
 .infopanel.large {
     box-sizing: border-box;
-    /* width: 374px; */
-    padding: 25px;
+    /*padding: 25px;*/
+    padding: 25px 0;
+    /*gap: 15px;*/
+}
+
+.info-frame {
+    flex-grow: 1;
+    overflow: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     gap: 15px;
+}
+
+.info-page-button {
+    min-width: 25px;
+    max-width: 25px;
+    text-align: center;
+    margin: auto;
+    cursor: pointer;
+}
+
+.info-page-button:hover {
+    color: var(--green);
+    transition: 0.2s
 }
 
 /* Infopanel.large will float (in Desktop mode > 960px) */
@@ -80,7 +101,7 @@
 
 .info-title a:hover {
     color: var(--green);
-    text-decoration: underline;
+    /*text-decoration: underline;*/
     transition: 0.3s;
 }
 
@@ -96,27 +117,50 @@
 
 .colour-palette-section {
     display: flex;
+    /*justify-content: center;*/
+    align-content: baseline;
     gap: 2px;
     line-height: var(--swatchsize);
-    /* border: 1px solid var(--lightgrey); */
+}
+
+.colour-palette-section.small {
+    flex-grow: 1;
+}
+
+.profile-name {
+    color: var(--lightgrey);
+    font-family: roboto, sans-serif;
+    font-style: italic;
+    font-size: 14px;
+    margin-right: 5px;
+    line-height: 14px;
 }
 
 div.colour-palette-section div {
     height: var(--swatchsize);
     width: var(--swatchsize);
-    /* border: 1px solid var(--lightgrey); */
 }
 
 div.all-tags-frame {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 div.tags-frame {
+    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     gap: 3px;
+}
+
+div.tags-frame.devices {
+    flex-shrink: 1;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 div.tags-frame div {

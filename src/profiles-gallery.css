@@ -211,6 +211,9 @@ input:focus {
 }
 
 .profile {
+    display: flex;
+    flex-direction: column;
+
     border: 1px solid var(--dark);
     background-color: var(--black);
     box-sizing: border-box;
