@@ -135,11 +135,6 @@ const Hero = () => {
           </div>
           <div className="info-frame">
             <div className="info-titlebox">
-              <h5 className="info-title">
-                <a href={profile.link} target="_blank" rel="noreferrer">
-                  {profile.title}
-                </a>
-              </h5>
               <div className="info-author">
                 <span className="profile-name">
                   {profile.lightingeffects[profileIndex].name}
@@ -147,14 +142,18 @@ const Hero = () => {
                 <span className="info-author-by">by</span>
                 <span className="info-author-name">{profile.OP}</span>
               </div>
-            </div>
-            <div className="colour-palette-section">
-              <span className="profile-name">{}</span>
-              <ColourPalettes
-                colours={profile.lightingeffects[profileIndex].colours.sort(
-                  colourSort.sortFn
-                )}
-              />
+              <div className="colour-palette-section">
+                <ColourPalettes
+                  colours={profile.lightingeffects[profileIndex].colours.sort(
+                    colourSort.sortFn
+                  )}
+                />
+              </div>
+              <h5 className="info-title">
+                <a href={profile.link} target="_blank" rel="noreferrer">
+                  {profile.title}
+                </a>
+              </h5>
             </div>
             <div className="all-tags-frame">
               <div className="tags-frame devices">

@@ -6,7 +6,7 @@
 
 .image-background {
     background-color: var(--black);
-    background-image: url(pexels-maik-poblocki-3812048-cut.jpg);
+    background-image: url(../assets/pexels-maik-poblocki-3812048-cut.jpg);
     background-repeat: no-repeat;
 }
 

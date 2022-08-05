@@ -4,57 +4,6 @@ import useQueryProfileDB from "../hooks/QueryProfileDB";
 import colourSort from "color-sorter";
 import useIndexCount from "../hooks/IndexCount";
 
-const ProfilesSearch = () => {
-  return (
-    <section id="profiles" className="profiles-search image-background">
-      <h2 className="profiles-title animate-entrance pop delay-4">
-        RAZER LIGHTING PROFILES
-      </h2>
-    </section>
-  );
-};
-
-const SearchBars = () => {
-  return (
-    <section className="search-bars image-background">
-      <div className="search-bars animate-entrance delay-8">
-        <form className="search-bars">
-          <div className="input devices">
-            <input
-              name="devices"
-              type="text"
-              placeholder="search for devices"
-            />
-            <i className="fa-solid fa-magnifying-glass icon-search"></i>
-          </div>
-          <div className="input frame">
-            <div className="input effects">
-              <input
-                name="effects"
-                type="text"
-                placeholder="filter for effects"
-              />
-              <i className="fa-solid fa-bars icon-search"></i>
-            </div>
-            <div className="input colours">
-              <input name="colours" type="text" placeholder="match colours" />
-              <i className="fa-solid fa-palette icon-search"></i>
-            </div>
-          </div>
-        </form>
-        <div className="filter-frame">
-          <div className="filter-label">Showing Profiles For</div>
-          <div className="filter-tags">
-            <div>BLACKWIDOW CHROMA</div>
-            <div>NAGA TRINITY</div>
-            <div>BLACKWIDOW CHROMA</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const Profile = ({
   thumbnail = "",
   videoURL = "",
@@ -108,11 +57,6 @@ const Profile = ({
         </div>
         <div className="info-frame">
           <div className="info-titlebox">
-            <h5 className="info-title">
-              <a href={link} target="_blank" rel="noreferrer">
-                {title}
-              </a>
-            </h5>
             <div className="info-author">
               <span className="profile-name">
                 {lightingeffects[profileIndex].name}
@@ -120,16 +64,21 @@ const Profile = ({
               <span className="info-author-by">by</span>
               <span className="info-author-name">{OP}</span>
             </div>
-          </div>
-          <div className="colour-palette-section small">
-            {lightingeffects[profileIndex].colours
-              .sort(colourSort.sortFn)
-              .map((x) => (
-                <div
-                  key={String(x)}
-                  style={{ backgroundColor: String(x) }}
-                ></div>
-              ))}
+            <div className="colour-palette-section small">
+              {lightingeffects[profileIndex].colours
+                .sort(colourSort.sortFn)
+                .map((x) => (
+                  <div
+                    key={String(x)}
+                    style={{ backgroundColor: String(x) }}
+                  ></div>
+                ))}
+            </div>
+            <h5 className="info-title">
+              <a href={link} target="_blank" rel="noreferrer">
+                {title}
+              </a>
+            </h5>
           </div>
           <div className="like-and-download">
             <span>
@@ -174,6 +123,7 @@ const ProfilesGallery = () => {
   const query = useMemo(() => ({}), []);
   const profiles = useQueryProfileDB(query);
 
+  // the page that contains all the profiles
   const ProfilesList = () => {
     // guard clause for empty gallery list
     if (!Array.isArray(profiles) || profiles.length === 0)
@@ -198,8 +148,6 @@ const ProfilesGallery = () => {
         link={profile.link}
         OP={profile.OP}
         lightingeffects={profile.lightingeffects}
-        // name={profile.lightingeffects[0].name}
-        // colours={profile.lightingeffects[0].colours}
         likes={profile.score + profile.local_likes}
         downloadURL={profile.download_link}
       />
@@ -215,4 +163,4 @@ const ProfilesGallery = () => {
   );
 };
 
-export { ProfilesSearch, SearchBars, ProfilesGallery };
+export { ProfilesGallery };

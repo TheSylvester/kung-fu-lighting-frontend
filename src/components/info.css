@@ -32,19 +32,21 @@
 
 .infopanel.large {
     box-sizing: border-box;
-    /*padding: 25px;*/
     padding: 25px 0;
+    /*margin: 25px 0;*/
     /*gap: 15px;*/
 }
 
 .info-frame {
+    overflow: hidden; /* somehow you need to add this to make flex-grow not exceed 100% */
+    /*overflow-y: visible; !* somehow you need to add this to make flex-grow not exceed 100% *!*/
     flex-grow: 1;
-    overflow: auto;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
+    /*padding: 25px 0;*/
 }
 
 .info-page-button {
@@ -86,16 +88,21 @@
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    font-family: "Titillium Web", sans-serif;
+    /*font-family: "Titillium Web", sans-serif;*/
 }
 
 .info-title,
 .info-title a:link,
 .info-title a:visited {
-    font-size: 18px;
-    line-height: 100%;
-    letter-spacing: -0.025em;
-    color: var(--white);
+    /*font-size: 18px;*/
+    /*line-height: 100%;*/
+    /*letter-spacing: -0.025em;*/
+    /*color: var(--white);*/
+    color: var(--lightgrey);
+    font-family: roboto, sans-serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 14px;
     text-decoration: none;
 }
 
@@ -103,6 +110,10 @@
     color: var(--green);
     /*text-decoration: underline;*/
     transition: 0.3s;
+}
+
+.info-author {
+    margin-bottom: 5px;
 }
 
 .info-author-by {
@@ -117,23 +128,29 @@
 
 .colour-palette-section {
     display: flex;
+    max-width: 100%;
     /*justify-content: center;*/
     align-content: baseline;
     gap: 2px;
     line-height: var(--swatchsize);
+    margin-bottom: 8px;
 }
 
 .colour-palette-section.small {
-    flex-grow: 1;
+    /*flex-grow: 1;*/
 }
 
 .profile-name {
-    color: var(--lightgrey);
-    font-family: roboto, sans-serif;
-    font-style: italic;
-    font-size: 14px;
+    /*color: var(--lightgrey);*/
+    /*font-family: roboto, sans-serif;*/
+    /*font-style: italic;*/
+    /*font-size: 14px;*/
     margin-right: 5px;
-    line-height: 14px;
+    /*line-height: 14px;*/
+    font-size: 20px;
+    /*line-height: 100%;*/
+    letter-spacing: -0.025em;
+    color: var(--white);
 }
 
 div.colour-palette-section div {
@@ -204,7 +221,7 @@ i.icon-button {
 }
 
 a.icon-button:hover {
-    transform: scale(1.2, 1.2);
+    transform: scale(1.1, 1.1);
     transition: 0.1s;
 }
 

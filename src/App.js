@@ -1,17 +1,12 @@
 // noinspection HtmlUnknownAnchorTarget
 
 import React, { useState } from "react";
-import "./testpage.css";
+import "./App.css";
 import "https://kit.fontawesome.com/ddca20bf1d.js";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import {
-  ProfilesSearch,
-  SearchBars,
-  ProfilesGallery
-} from "./components/Profiles";
-
-/* eslint-disable */
+import { ProfilesGallery } from "./components/Profiles";
+import { ProfilesSearch, SearchBars } from "./components/ProfilesSearch";
 
 const Divider = () => <div className="divider-gap"></div>;
 
@@ -29,7 +24,7 @@ const Footer = () => {
 export const SearchItemsContext = React.createContext({});
 
 const App = () => {
-  const [searchItems, SetSearchItems] = useState(null);
+  const [searchItems, SetSearchItems] = useState({});
 
   const changeSearchItems = (newSearchItems) => {
     SetSearchItems(newSearchItems);
