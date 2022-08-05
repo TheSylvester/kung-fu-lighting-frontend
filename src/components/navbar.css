@@ -1,0 +1,96 @@
+.navbar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+    height: 60px;
+
+    font-family: "Titillium Web", sans-serif;
+    color: var(--white);
+    background-color: var(--black);
+    z-index: 5;
+}
+
+.navcontents {
+    display: flex;
+    width: 700px;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 16px;
+}
+
+.nav-element {
+    cursor: pointer;
+    color: var(--white);
+    transition: 0.4s;
+}
+
+.nav-element:hover {
+    color: var(--green);
+}
+
+.navcontents button,
+.navcontents a {
+    font-family: "Titillium Web", sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    color: var(--white);
+    background-color: var(--black);
+    border: 0;
+    cursor: pointer;
+}
+
+/* .navcontents button:hover {
+  color: var(--green);
+} */
+
+.nav-hamburger {
+    padding: 0 5px;
+    font-size: 28px;
+}
+
+@media (min-width: 450px) {
+    .nav-hamburger {
+        display: none;
+    }
+}
+
+@media (max-width: 450px) {
+    .nav-element {
+        display: none;
+    }
+
+    .login-username {
+        display: none;
+    }
+}
+
+.logo-chroma {
+    /* CHROMA */
+    font-weight: var(--regular);
+    font-size: 24px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+}
+
+.logo-gallery {
+    /* GALLERY */
+    font-weight: var(--bold);
+    font-size: 24px;
+    line-height: 20px;
+    color: var(--white);
+}
+
+.login {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    color: var(--lightgrey);
+}
+
+.login-icon {
+    font-size: 32px;
+}
