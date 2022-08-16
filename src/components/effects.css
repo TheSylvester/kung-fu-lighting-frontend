@@ -1,9 +1,29 @@
+:root {
+    --fa-angle-left: "\f104";
+    --fa-angle-right: "\f105";
+    --fa-angle-up: "\f106";
+    --fa-angle-down: "\f107";
+    --fa-plus: "\2b";
+    --fa-magnifying-glass: "\f002";
+    --fa-filter: "\f0b0";
+    --fa-keyboard: "\f11c";
+    --fa-hurricane: "\f751";
+}
+
 .float-shadow-text {
     text-shadow: 0 2px 15px rgba(0, 0, 0, 0.75);
 }
 
 .float-shadow {
     filter: drop-shadow(0px 2px 15px rgba(0, 0, 0, 0.75));
+}
+
+.hidden-checkbox {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* Chroma */

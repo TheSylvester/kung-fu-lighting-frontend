@@ -3,43 +3,36 @@
 import React, { useState } from "react";
 import "./App.css";
 import "https://kit.fontawesome.com/ddca20bf1d.js";
+// import { SearchProvider, useSearchContext } from "./contexts/SearchContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Footer from "./components/Footer";
 import { ProfilesGallery } from "./components/Profiles";
 import { ProfilesSearch, SearchBars } from "./components/ProfilesSearch";
 
 const Divider = () => <div className="divider-gap"></div>;
 
-const Footer = () => {
-  return (
-    <section className="footer">
-      <a href="#profiles">
-        <i className="fa-solid fa-angle-up footer-arrow"></i>see other profiles
-        <i className="fa-solid fa-angle-up footer-arrow"></i>
-      </a>
-    </section>
-  );
-};
+function SearchAndGallery() {
+  const [query, setQuery] = useState({});
 
-export const SearchItemsContext = React.createContext({});
+  return (
+    <>
+      <ProfilesSearch />
+      <SearchBars setQuery={setQuery} />
+      <ProfilesGallery query={query} />
+    </>
+  );
+}
 
 const App = () => {
-  const [searchItems, SetSearchItems] = useState({});
-
-  const changeSearchItems = (newSearchItems) => {
-    SetSearchItems(newSearchItems);
-  };
-
   return (
-    <SearchItemsContext.Provider value={{ searchItems, changeSearchItems }}>
+    <>
       <Navbar />
       <Hero />
       <Divider />
-      <ProfilesSearch />
-      <SearchBars />
-      <ProfilesGallery />
+      <SearchAndGallery />
       <Footer />
-    </SearchItemsContext.Provider>
+    </>
   );
 };
 

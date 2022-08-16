@@ -158,7 +158,9 @@ const Hero = () => {
             <div className="all-tags-frame">
               <div className="tags-frame devices">
                 <MapArrayToDivs
-                  array={profile.lightingeffects[profileIndex].devices}
+                  array={profile.lightingeffects[profileIndex].devices.map(
+                    (x) => x.replace("RAZER ", "")
+                  )}
                 />
               </div>
               <div className="tags-frame">

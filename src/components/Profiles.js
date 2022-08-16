@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import VideoJS from "./VideoJS";
 import useQueryProfileDB from "../hooks/QueryProfileDB";
 import colourSort from "color-sorter";
@@ -45,7 +45,7 @@ const Profile = ({
 
     return active ? video : img;
   };
-  const CardInfoppanel = () => {
+  const CardInfopanel = () => {
     const [profileIndex, moveProfileIndex] = useIndexCount(
       lightingeffects.length
     );
@@ -114,13 +114,12 @@ const Profile = ({
       <div className="video-box">
         <CardMedia />
       </div>
-      <CardInfoppanel />
+      <CardInfopanel />
     </div>
   );
 };
 
-const ProfilesGallery = () => {
-  const query = useMemo(() => ({}), []);
+const ProfilesGallery = ({ query }) => {
   const profiles = useQueryProfileDB(query);
 
   // the page that contains all the profiles

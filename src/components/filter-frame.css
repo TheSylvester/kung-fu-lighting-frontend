@@ -1,0 +1,73 @@
+/*------------- filter frame stuff below ----------- */
+.filter-frame {
+    gap: 10px;
+    padding-top: 8px;
+    align-items: flex-start;
+}
+
+@media (max-width: 720px) {
+    .filter-frame {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 720px) {
+    .filter-frame {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+div.filter-label {
+    min-width: max-content;
+    line-height: 20px;
+}
+
+div.filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    font-size: 16px;
+    padding: 0 1vw;
+}
+
+div.filter-tags div {
+    min-width: max-content;
+    background-color: var(--darkgrey);
+    color: var(--lightgrey);
+    font-weight: var(--semibold);
+    line-height: 100%;
+    padding: 3px 8px;
+    border-radius: 5px;
+    /*border: 1px solid var(--grey);*/
+}
+
+div.filter-tags div.clickable-tag {
+    cursor: pointer;
+}
+
+div.filter-tags div.clickable-tag:hover {
+    color: var(--grey);
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
+    transition: 0.3s ease-out;
+}
+
+div.filter-tags div.clickable-tag:hover::before {
+    margin-right: 5px;
+    font-family: "Font Awesome 6 Free", serif;
+    font-size: 16px;
+    line-height: 100%;
+    content: "\f00d";
+    color: var(--green);
+    opacity: 1;
+    transition: 0.3s;
+}
+
+div.filter-tags div.clickable-tag::before {
+    margin: 0;
+    font-family: "Font Awesome 6 Free", serif;
+    content: "";
+    transition: 0.3s;
+    opacity: 0;
+}
