@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 
-function useIndexCount(arr_length) {
+function useIndexCount(arr_length = 0) {
   const [index, setIndex] = useState(0);
   const length = useMemo(() => arr_length, [arr_length]);
 
@@ -19,7 +19,10 @@ function useIndexCount(arr_length) {
     }
   };
 
-  return [index, moveIndex];
+  const nextIndex = () => (index + 1 >= length ? 0 : index + 1);
+  const prevIndex = () => (index - 1 < 0 ? length - 1 : index - 1);
+
+  return [index, moveIndex, nextIndex, prevIndex];
 }
 
 export default useIndexCount;

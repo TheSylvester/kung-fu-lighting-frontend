@@ -37,11 +37,11 @@ const Checkbox = ({ id, type, className, boxes, setBoxes }) => {
 };
 
 const DevicesDropdownList = ({
-  devices,
-  devicesBoxes,
-  devicesInput,
-  setDevicesBoxes
-}) => {
+                               devices,
+                               devicesBoxes,
+                               devicesInput,
+                               setDevicesBoxes
+                             }) => {
   return (
     <ul>
       {devices.map((device) => {
@@ -173,6 +173,11 @@ const SearchBars = ({ setQuery }) => {
       }),
     [debounce_setQuery, searchInput, bySelected, devicesBoxes, effectsBoxes]
   );
+
+  // addEventListener for clicking outside of dropdown boxes
+  useEffect(() => {
+
+  }, []);
 
   const handleDevicesInput = (e) => {
     setDevicesInput(e.target.value);
