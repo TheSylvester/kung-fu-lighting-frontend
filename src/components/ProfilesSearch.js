@@ -2,6 +2,11 @@ import useLightingEffectsList from "../hooks/LightingEffectsList";
 import { useEffect, useMemo, useState } from "react";
 import { FilterFrame } from "./FilterFrame";
 import debounce from "lodash/debounce";
+import {
+  DevicesDropdownList,
+  EffectsDropdownList,
+  SearchByDropdownList
+} from "./DropdownLists";
 
 const ProfilesSearch = () => {
   return (
@@ -10,121 +15,6 @@ const ProfilesSearch = () => {
         RAZER LIGHTING PROFILES
       </h2>
     </section>
-  );
-};
-
-const Checkbox = ({ id, type, className, boxes, setBoxes }) => {
-  const handleCheck = () => {
-    setBoxes((b) => {
-      if (b.includes(id)) {
-        return b.filter((v) => v !== id);
-      } else {
-        return [...b, id];
-      }
-    });
-  };
-  return (
-    <>
-      <input
-        type={type}
-        id={id}
-        className={className}
-        onChange={handleCheck}
-        checked={boxes.includes(id)}
-      />
-    </>
-  );
-};
-
-const DevicesDropdownList = ({
-                               devices,
-                               devicesBoxes,
-                               devicesInput,
-                               setDevicesBoxes
-                             }) => {
-  return (
-    <ul>
-      {devices.map((device) => {
-        const formattedName = device.replace(/razer /gi, "");
-        const formattedNameDash = device.replace(/ /g, "-");
-        return (
-          <li
-            key={formattedNameDash}
-            style={
-              device.toLowerCase().includes(devicesInput.toLowerCase())
-                ? {}
-                : { display: "none" } // hide this <li> if device inputbox doesn't match
-            }
-          >
-            <Checkbox
-              id={formattedNameDash}
-              type="checkbox"
-              className="hidden-checkbox dropdown-menu-item"
-              boxes={devicesBoxes}
-              setBoxes={setDevicesBoxes}
-            />
-            <label htmlFor={formattedNameDash} className="dropdown-menu-label">
-              {formattedName.toLowerCase()}
-            </label>
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
-
-const EffectsDropdownList = ({ effects, effectsBoxes, setEffectsBoxes }) => {
-  return (
-    <ul>
-      {effects.map((effect) => {
-        const formattedName = effect;
-        const formattedNameDash = formattedName.replace(" ", "-");
-
-        return (
-          <li key={formattedNameDash}>
-            <Checkbox
-              type="checkbox"
-              id={formattedNameDash}
-              className="hidden-checkbox dropdown-menu-item"
-              boxes={effectsBoxes}
-              setBoxes={setEffectsBoxes}
-            />
-            <label htmlFor={formattedNameDash} className="dropdown-menu-label">
-              {formattedName}
-            </label>
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
-
-const SearchByDropdownList = ({ byList, bySelected, setBySelected }) => {
-  const handleCheck = (value) => {
-    setBySelected(value);
-  };
-  return (
-    <ul>
-      {byList.map((name) => {
-        const dashName = name.replace(" ", "-");
-        return (
-          <li key={dashName}>
-            <input
-              type="radio"
-              name="search-by-radio"
-              id={dashName}
-              className="hidden-checkbox dropdown-menu-item"
-              value={dashName}
-              onChange={() => handleCheck(dashName)}
-              checked={bySelected === dashName}
-            />
-            <label htmlFor={dashName} className="dropdown-menu-label">
-              {name}
-            </label>
-          </li>
-        );
-      })}
-    </ul>
   );
 };
 
@@ -174,10 +64,18 @@ const SearchBars = ({ setQuery }) => {
     [debounce_setQuery, searchInput, bySelected, devicesBoxes, effectsBoxes]
   );
 
-  // addEventListener for clicking outside of dropdown boxes
-  useEffect(() => {
-
-  }, []);
+  // addEventListener to uncheck dropdown-button on outside clicks
+  // useEffect(() => {
+  //   document.addEventListener("click", (e) => {
+  //     // if you click anywhere on a screen other than an active box, deselect all boxes
+  //     const isDropdownButton = e.target.matches("[data-dropdown-button]");
+  //     if (!isDropdownButton) {
+  //       document
+  //         .querySelectorAll("[data-dropdown-checkbox]")
+  //         .forEach((b) => (b.checked = false));
+  //     }
+  //   });
+  // }, []);
 
   const handleDevicesInput = (e) => {
     setDevicesInput(e.target.value);
@@ -185,6 +83,31 @@ const SearchBars = ({ setQuery }) => {
 
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
+  };
+
+  const toggleClickListener = (e) => {
+    // addEventListener when target.checked === true
+    // the listener self removes when you first click outside,
+    // or when the checkbox is manually unchecked
+
+    const handleClick = (f) => {
+      const clickIsOutside =
+        f.target.closest("[data-dropdown-root]") !==
+        e.target.closest("[data-dropdown-root]");
+
+      if (clickIsOutside) {
+        // uncheck the associated checkbox
+        e.target.closest("[data-dropdown-checkbox]").checked = false;
+        document.removeEventListener("click", handleClick, { capture: true });
+      }
+    };
+
+    if (e.target.checked === true) {
+      document.addEventListener("click", handleClick, { capture: true });
+    } else {
+      // turn off listener on any unchecking
+      document.removeEventListener("click", handleClick, { capture: true });
+    }
   };
 
   return (
@@ -206,16 +129,25 @@ const SearchBars = ({ setQuery }) => {
             </div>
           </div>
           <div className="input frame right">
-            <div className="input tab filter">
-              <label htmlFor="filter-by-toggle" className="dropdown-button">
+            <div className="input tab filter" data-dropdown-root="filter">
+              <label
+                htmlFor="filter-by-toggle"
+                className="dropdown-button"
+                data-dropdown-button="data-dropdown-button"
+              >
                 {bySelected.replace("-", " ")}
               </label>
               <input
                 type="checkbox"
                 id="filter-by-toggle"
                 className="hidden-checkbox"
+                onChange={toggleClickListener}
+                data-dropdown-checkbox="data-dropdown-checkbox"
               />
-              <div className="dropdown-menu filter">
+              <div
+                className="dropdown-menu filter"
+                data-dropdown="data-dropdown"
+              >
                 <SearchByDropdownList
                   byList={byList}
                   bySelected={bySelected}
@@ -242,19 +174,25 @@ const SearchBars = ({ setQuery }) => {
               </div>
               <span className="icon-anchor devices"></span>
             </div>
-            <div className="input tab effects">
+            <div className="input tab effects" data-dropdown-root="effects">
               <input
                 type="checkbox"
                 id="filter-effects-toggle"
                 className="hidden-checkbox"
+                onChange={toggleClickListener}
+                data-dropdown-checkbox="data-dropdown-checkbox"
               />
               <label
                 className="dropdown-button"
                 htmlFor="filter-effects-toggle"
+                data-dropdown-button="data-dropdown-button"
               >
                 effects
               </label>
-              <div className="dropdown-menu effects">
+              <div
+                className="dropdown-menu effects"
+                data-dropdown="data-dropdown"
+              >
                 <EffectsDropdownList
                   effects={effects}
                   effectsBoxes={effectsBoxes}

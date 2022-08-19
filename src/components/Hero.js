@@ -7,14 +7,14 @@ const populateProfile = (rawProfile) => {
   const featured_description = rawProfile.tags.find(
     (x) => x.tag === "featured"
   ).description;
-  const videoURL = rawProfile.videoURL;
+  const videoURL = rawProfile.hlsURL;
   const thumbnail = rawProfile.thumbnail;
   const title = rawProfile.title;
   const link = rawProfile.link;
   const downloadURL = rawProfile.download_link;
   const OP = rawProfile.OP;
   const lightingeffects = rawProfile.lightingeffects; // provide all profiles
-  const likes = rawProfile.score + rawProfile.local_likes;
+  const likes = rawProfile.score;
 
   return {
     featured_description,
@@ -30,7 +30,6 @@ const populateProfile = (rawProfile) => {
 };
 
 const Hero = () => {
-  // const [selectedIndex, setSelectedIndex] = useState(0);
   const [carouselNextMoving, setCarouselNextMoving] = useState(false);
   const [carouselPrevMoving, setCarouselPrevMoving] = useState(false);
 
@@ -71,7 +70,7 @@ const Hero = () => {
       </div>
       <div className="hero-banner-frame animate-entrance delay-7 float-shadow">
         <ProfileCard
-          profile={leftProfile}
+          {...leftProfile}
           position="left"
           onClick={carouselPrev}
           carouselNextMoving={carouselNextMoving}
@@ -81,7 +80,7 @@ const Hero = () => {
           moveIndex={moveIndex}
         />
         <ProfileCard
-          profile={middleProfile}
+          {...middleProfile}
           position="middle"
           carouselNextMoving={carouselNextMoving}
           setCarouselNextMoving={setCarouselNextMoving}
@@ -90,7 +89,7 @@ const Hero = () => {
           moveIndex={moveIndex}
         />
         <ProfileCard
-          profile={rightProfile}
+          {...rightProfile}
           position="right"
           onClick={carouselNext}
           carouselNextMoving={carouselNextMoving}
@@ -100,7 +99,7 @@ const Hero = () => {
           moveIndex={moveIndex}
         />
         <ProfileCard
-          profile={backProfile}
+          {...backProfile}
           position="back"
           carouselNextMoving={carouselNextMoving}
           setCarouselNextMoving={setCarouselNextMoving}

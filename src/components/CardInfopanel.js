@@ -1,60 +1,74 @@
 import useIndexCount from "../hooks/IndexCount";
 import colourSort from "color-sorter";
 
-export const CardInfopanel = ({ profile }) => {
+export const CardInfopanel = ({
+  title = "",
+  link = "",
+  OP = "",
+  lightingeffects = [],
+  likes = 0,
+  downloadURL = "",
+  infopanelSize = "large"
+}) => {
   const [profileIndex, moveProfileIndex] = useIndexCount(
-    profile.lightingeffects.length
+    lightingeffects.length
   );
 
+  // make sure the index < lightingeffects.length
+  const guarded_profileIndex =
+    profileIndex < lightingeffects.length ? profileIndex : 0;
+  // set it to 0
+  if (profileIndex >= lightingeffects.length) moveProfileIndex(0);
+
   return (
-    <div className="infopanel large">
+    <div className={`infopanel ${infopanelSize}`}>
       <div className="info-page-button" onClick={() => moveProfileIndex(-1)}>
-        {profile.lightingeffects.length > 1 ? "<" : ""}
+        {lightingeffects.length > 1 ? "<" : ""}
       </div>
       <div className="info-frame">
         <div className="info-titlebox">
           <div className="info-author">
             <span className="profile-name">
-              {profile.lightingeffects[profileIndex].name}
+              {lightingeffects[guarded_profileIndex].name}
             </span>
             <span className="info-author-by">by</span>
-            <span className="info-author-name">{profile.OP}</span>
+            <span className="info-author-name">{OP}</span>
           </div>
           <div className="colour-palette-section">
             <ColourPalettes
-              colours={profile.lightingeffects[profileIndex].colours.sort(
+              colours={lightingeffects[guarded_profileIndex].colours.sort(
                 colourSort.sortFn
               )}
             />
           </div>
           <h5 className="info-title">
-            <a href={profile.link} target="_blank" rel="noreferrer">
-              {profile.title}
+            <a href={link} target="_blank" rel="noreferrer">
+              {title}
             </a>
           </h5>
         </div>
         <div className="all-tags-frame">
           <div className="tags-frame devices">
             <MapArrayToDivs
-              array={profile.lightingeffects[profileIndex].devices.map((x) =>
+              array={lightingeffects[guarded_profileIndex].devices.map((x) =>
                 x.replace("RAZER ", "")
               )}
             />
           </div>
           <div className="tags-frame">
             <MapArrayToDivs
-              array={profile.lightingeffects[profileIndex].effects}
+              array={lightingeffects[guarded_profileIndex].effects}
             />
           </div>
         </div>
         <div className="like-and-download">
           <span>
             <i className="fa-regular fa-thumbs-up icon-button"></i>
-            <span>{profile.likes}</span>
+            <span>{likes}</span>
           </span>
           <a
             className="icon-button"
-            href={profile.downloadURL}
+            href={downloadURL}
             target="_blank"
             rel="noreferrer"
           >
@@ -66,7 +80,7 @@ export const CardInfopanel = ({ profile }) => {
         </div>
       </div>
       <div className="info-page-button" onClick={() => moveProfileIndex(1)}>
-        {profile.lightingeffects.length > 1 ? ">" : ""}
+        {lightingeffects.length > 1 ? ">" : ""}
       </div>
     </div>
   );

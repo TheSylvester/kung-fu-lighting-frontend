@@ -1,8 +1,7 @@
 import { useState } from "react";
 import VideoJS from "./VideoJS";
 import useQueryProfileDB from "../hooks/QueryProfileDB";
-import colourSort from "color-sorter";
-import useIndexCount from "../hooks/IndexCount";
+import { CardInfopanel } from "./CardInfopanel";
 
 const Profile = ({
   thumbnail = "",
@@ -35,7 +34,8 @@ const Profile = ({
         // },
         {
           src: videoURL,
-          type: "video/mp4"
+          // type: "video/mp4"
+          type: "application/vnd.apple.mpegurl"
         }
       ]
     };
@@ -44,65 +44,6 @@ const Profile = ({
     const video = <VideoJS options={videoJsOptions} />;
 
     return active ? video : img;
-  };
-  const CardInfopanel = () => {
-    const [profileIndex, moveProfileIndex] = useIndexCount(
-      lightingeffects.length
-    );
-
-    return (
-      <div className="infopanel small">
-        <div className="info-page-button" onClick={() => moveProfileIndex(-1)}>
-          {lightingeffects.length > 1 ? "<" : ""}
-        </div>
-        <div className="info-frame">
-          <div className="info-titlebox">
-            <div className="info-author">
-              <span className="profile-name">
-                {lightingeffects[profileIndex].name}
-              </span>
-              <span className="info-author-by">by</span>
-              <span className="info-author-name">{OP}</span>
-            </div>
-            <div className="colour-palette-section small">
-              {lightingeffects[profileIndex].colours
-                .sort(colourSort.sortFn)
-                .map((x) => (
-                  <div
-                    key={String(x)}
-                    style={{ backgroundColor: String(x) }}
-                  ></div>
-                ))}
-            </div>
-            <h5 className="info-title">
-              <a href={link} target="_blank" rel="noreferrer">
-                {title}
-              </a>
-            </h5>
-          </div>
-          <div className="like-and-download">
-            <span>
-              <i className="fa-regular fa-thumbs-up icon-button"></i>
-              <span>{likes}</span>
-            </span>
-            <a
-              className="icon-button"
-              href={downloadURL}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>
-                <i className="fa-solid fa-download icon-button"></i>
-                <span>download</span>
-              </span>
-            </a>
-          </div>
-        </div>
-        <div className="info-page-button" onClick={() => moveProfileIndex(1)}>
-          {lightingeffects.length > 1 ? ">" : ""}
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -114,7 +55,15 @@ const Profile = ({
       <div className="video-box">
         <CardMedia />
       </div>
-      <CardInfopanel />
+      <CardInfopanel
+        title={title}
+        link={link}
+        OP={OP}
+        lightingeffects={lightingeffects}
+        likes={likes}
+        downloadURL={downloadURL}
+        infopanelSize={"small"}
+      />
     </div>
   );
 };
@@ -142,7 +91,7 @@ const ProfilesGallery = ({ query }) => {
       <Profile
         key={profile.id36}
         thumbnail={profile.thumbnail}
-        videoURL={profile.videoURL}
+        videoURL={profile.hlsURL}
         title={profile.title}
         link={profile.link}
         OP={profile.OP}

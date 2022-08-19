@@ -3,6 +3,8 @@ import { useState, useMemo } from "react";
 function useIndexCount(arr_length = 0) {
   const [index, setIndex] = useState(0);
   const length = useMemo(() => arr_length, [arr_length]);
+  // const length = useState(arr_length);
+  // const length = arr_length;
 
   const moveIndex = (direction) => {
     if (direction === 0) {

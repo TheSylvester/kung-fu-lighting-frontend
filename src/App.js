@@ -6,7 +6,7 @@ import "https://kit.fontawesome.com/ddca20bf1d.js";
 // import { SearchProvider, useSearchContext } from "./contexts/SearchContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Footer from "./components/Footer";
+import { Footer } from "./components/Footer";
 import { ProfilesGallery } from "./components/Profiles";
 import { ProfilesSearch, SearchBars } from "./components/ProfilesSearch";
 

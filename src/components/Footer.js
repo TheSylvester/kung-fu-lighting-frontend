@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <section className="footer">
       <a href={"#profiles"}>
@@ -10,5 +10,3 @@ const Footer = () => {
     </section>
   );
 };
-
-export default Footer;

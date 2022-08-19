@@ -3,7 +3,14 @@ import VideoJS from "./VideoJS";
 import { CardInfopanel } from "./CardInfopanel";
 
 export const ProfileCard = ({
-  profile,
+  videoURL,
+  thumbnail,
+  title,
+  link,
+  downloadURL,
+  OP,
+  lightingeffects,
+  likes,
   position,
   onClick,
   carouselNextMoving,
@@ -12,41 +19,40 @@ export const ProfileCard = ({
   setCarouselPrevMoving,
   moveIndex
 }) => {
-  /** EXTRACT THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-  const CardMedia = ({ pos, profile, next, prev }) => {
+  const CardMedia = ({ pos, thumbnail, videoURL, next, prev }) => {
     // CardMedia in the middle is a video, but everywhere else is Thumbnail only
     const playerRef = useRef(null); // ref to the Video.js player
-
     const handlePlayerReady = (player) => {
       playerRef.current = player;
       // You can handle player events here, for example:
       player.on("waiting", () => {
         // videojs.log("player is waiting");
       });
-
       player.on("dispose", () => {
         // videojs.log("player will dispose");
       });
     };
-
+    // control VideoJS source and format here
     const videoJsOptions = {
       controls: false,
-      poster: profile.thumbnail,
+      poster: thumbnail,
       loop: true,
       autoplay: true,
       muted: true,
       fluid: true,
       sources: [
         {
-          src: profile.videoURL,
-          type: "video/mp4"
-          // type: "application/vnd.apple.mpegurl"
+          src: videoURL,
+          // type: "video/mp4"
+          type: "application/vnd.apple.mpegurl"
         }
       ]
     };
 
     /**
-     * returns dynamic style for animation for slide
+     * returns dynamic style for animating the position of the card based on
+     * the carouselNext / carouselPrev state passed by its parent, tracking
+     * whether animation is at rest or in motion
      */
     const animMediaOnCarousel = () => {
       const animImgRightToLeft = {
@@ -85,7 +91,7 @@ export const ProfileCard = ({
       <img
         className={["card-media", pos].join(" ")}
         style={animMediaOnCarousel()}
-        src={profile.thumbnail}
+        src={thumbnail}
         alt={`${pos} pic`}
       />
     );
@@ -144,10 +150,12 @@ export const ProfileCard = ({
     if (!carouselNextMoving && !carouselPrevMoving) return;
 
     /* finally change the banner after animation is over */
-    if (carouselNextMoving) moveIndex(1);
-    // setSelectedIndex(nextIndex(selectedIndex, maxIndex));
-    if (carouselPrevMoving) moveIndex(-1);
-    // setSelectedIndex(prevIndex(selectedIndex, maxIndex));
+    if (carouselNextMoving) {
+      moveIndex(1);
+    }
+    if (carouselPrevMoving) {
+      moveIndex(-1);
+    }
 
     /* remove animated states */
     setCarouselNextMoving(false);
@@ -163,11 +171,20 @@ export const ProfileCard = ({
     >
       <CardMedia
         pos={position}
-        profile={profile}
+        thumbnail={thumbnail}
+        videoURL={videoURL}
         next={carouselNextMoving}
         prev={carouselPrevMoving}
       />
-      <CardInfopanel profile={profile} />
+      <CardInfopanel
+        title={title}
+        link={link}
+        OP={OP}
+        lightingeffects={lightingeffects}
+        likes={likes}
+        downloadURL={downloadURL}
+        infopanelSize={"large"}
+      />
     </div>
   );
 };
