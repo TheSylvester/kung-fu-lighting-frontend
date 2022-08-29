@@ -1,9 +1,8 @@
 import { useState } from "react";
 import VideoJS from "./VideoJS";
-import useQueryProfileDB from "../hooks/QueryProfileDB";
 import { CardInfopanel } from "./CardInfopanel";
 
-const Profile = ({
+export const Profile = ({
   thumbnail = "",
   videoURL = "",
   title = "",
@@ -67,48 +66,3 @@ const Profile = ({
     </div>
   );
 };
-
-const ProfilesGallery = ({ query }) => {
-  const profiles = useQueryProfileDB(query);
-
-  // the page that contains all the profiles
-  const ProfilesList = () => {
-    // guard clause for empty gallery list
-    if (!Array.isArray(profiles) || profiles.length === 0)
-      return (
-        <div
-          style={{
-            margin: "auto auto",
-            color: "var(--green)",
-            border: "1px solid var(--green)"
-          }}
-        >
-          no profiles to display
-        </div>
-      );
-
-    return profiles.map((profile) => (
-      <Profile
-        key={profile.id36}
-        thumbnail={profile.thumbnail}
-        videoURL={profile.hlsURL}
-        title={profile.title}
-        link={profile.link}
-        OP={profile.OP}
-        lightingeffects={profile.lightingeffects}
-        likes={profile.score + profile.local_likes}
-        downloadURL={profile.download_link}
-      />
-    ));
-  };
-
-  return (
-    <section className="profiles-gallery">
-      <div className="profiles-frame animate-entrance delay-0">
-        <ProfilesList />
-      </div>
-    </section>
-  );
-};
-
-export { ProfilesGallery };

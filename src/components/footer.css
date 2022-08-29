@@ -1,33 +1,9 @@
 .footer {
-  height: 200px;
-  background-color: var(--black);
-  display: grid;
-  align-items: center;
-  justify-content: center;
+    padding-bottom: 5vh;
+    background-color: var(--black);
+    display: grid;
+    align-items: center;
+    justify-content: center;
 }
 
-.footer a {
-  font-family: "Titillium Web", sans-serif;
-  font-size: 16px;
-  text-decoration: none;
-  color: var(--white);
-  background-color: var(--black);
-  /* padding: 1vh 3vw; */
-  cursor: pointer;
-  border: 1px solid var(--green);
-  border-radius: 6px;
-  text-align: center;
-  line-height: 24px;
-  box-sizing: border-box;
-}
 
-.footer a:hover {
-  color: var(--green);
-  background-color: var(--dark);
-}
-
-.footer-arrow {
-  font-size: 20px;
-  line-height: 24px;
-  margin: 0 20px;
-}

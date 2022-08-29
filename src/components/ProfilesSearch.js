@@ -1,4 +1,4 @@
-import useLightingEffectsList from "../hooks/LightingEffectsList";
+import useDevicesAndEffectsList from "../hooks/LightingEffectsList";
 import { useEffect, useMemo, useState } from "react";
 import { FilterFrame } from "./FilterFrame";
 import debounce from "lodash/debounce";
@@ -19,7 +19,7 @@ const ProfilesSearch = () => {
 };
 
 const SearchBars = ({ setQuery }) => {
-  const { devices, effects } = useLightingEffectsList();
+  const { devices, effects } = useDevicesAndEffectsList();
 
   const byList = ["...all", "profile name", "author", "description"];
   const [searchInput, setSearchInput] = useState("");
@@ -63,19 +63,6 @@ const SearchBars = ({ setQuery }) => {
       }),
     [debounce_setQuery, searchInput, bySelected, devicesBoxes, effectsBoxes]
   );
-
-  // addEventListener to uncheck dropdown-button on outside clicks
-  // useEffect(() => {
-  //   document.addEventListener("click", (e) => {
-  //     // if you click anywhere on a screen other than an active box, deselect all boxes
-  //     const isDropdownButton = e.target.matches("[data-dropdown-button]");
-  //     if (!isDropdownButton) {
-  //       document
-  //         .querySelectorAll("[data-dropdown-checkbox]")
-  //         .forEach((b) => (b.checked = false));
-  //     }
-  //   });
-  // }, []);
 
   const handleDevicesInput = (e) => {
     setDevicesInput(e.target.value);
