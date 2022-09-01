@@ -20,8 +20,8 @@ function useQueryProfileDB(query, page = 1) {
         const queryHasReset = lastQuery.current !== query;
         const response = await profilesService.get({
           ...query,
-          limit: LIMIT,
-          skip: LIMIT * ((queryHasReset ? 1 : page) - 1)
+          limit: query.limit ?? LIMIT,
+          skip: (query.limit ?? LIMIT) * ((queryHasReset ? 1 : page) - 1)
         });
         // await timeout(5000); // ARTIFICIAL TIMEOUT
         lastQuery.current = query; // memoize the last query sent

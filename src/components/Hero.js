@@ -33,7 +33,7 @@ const Hero = () => {
   const [carouselNextMoving, setCarouselNextMoving] = useState(false);
   const [carouselPrevMoving, setCarouselPrevMoving] = useState(false);
 
-  const query = useMemo(() => ({ tag: "featured" }), []);
+  const query = useMemo(() => ({ tag: "featured", limit: 20 }), []);
   const { profiles: featuredProfiles } = useQueryProfileDB(query);
 
   const [index, moveIndex, nextIndex, prevIndex] = useIndexCount(
