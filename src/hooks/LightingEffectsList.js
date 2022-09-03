@@ -8,8 +8,8 @@ function useDevicesAndEffectsList() {
   useEffect(() => {
     (async function () {
       const { devices, effects } = await lightingEffectsListService.get();
-      setDevices(devices.sort());
-      setEffects(effects.sort());
+      setDevices(devices);
+      setEffects(effects);
     })();
   }, []);
 
