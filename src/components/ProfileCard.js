@@ -17,7 +17,8 @@ export const ProfileCard = ({
   setCarouselNextMoving,
   carouselPrevMoving,
   setCarouselPrevMoving,
-  moveIndex
+  moveIndex,
+  openLightbox
 }) => {
   const CardMedia = ({ pos, thumbnail, videoURL, next, prev }) => {
     // CardMedia in the middle is a video, but everywhere else is Thumbnail only
@@ -86,6 +87,7 @@ export const ProfileCard = ({
         style={animMediaOnCarousel()}
         options={videoJsOptions}
         onReady={handlePlayerReady}
+        onClick={() => openLightbox(videoURL)}
       />
     ) : (
       <img

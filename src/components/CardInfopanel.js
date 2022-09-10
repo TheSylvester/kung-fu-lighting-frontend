@@ -1,5 +1,8 @@
 import useIndexCount from "../hooks/IndexCount";
 import colourSort from "color-sorter";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const CardInfopanel = ({
   title = "",
@@ -63,7 +66,7 @@ export const CardInfopanel = ({
         </div>
         <div className="like-and-download">
           <span>
-            <i className="fa-regular fa-thumbs-up icon-button"></i>
+            <FontAwesomeIcon icon={faThumbsUp} className="icon-button-icon" />
             <span>{likes}</span>
           </span>
           <a
@@ -73,7 +76,7 @@ export const CardInfopanel = ({
             rel="noreferrer"
           >
             <span>
-              <i className="fa-solid fa-download icon-button"></i>
+              <FontAwesomeIcon icon={faDownload} className="icon-button-icon" />
               <span>download</span>
             </span>
           </a>

@@ -21,10 +21,22 @@ function useIndexCount(arr_length = 0) {
     }
   };
 
-  const nextIndex = () => (index + 1 >= length ? 0 : index + 1);
-  const prevIndex = () => (index - 1 < 0 ? length - 1 : index - 1);
+  // const nextIndex = () => (index + 1 >= length ? 0 : index + 1);
+  // const prevIndex = () => (index - 1 < 0 ? length - 1 : index - 1);
+  const getIndex = (steps) => {
+    let result = index + steps;
 
-  return [index, moveIndex, nextIndex, prevIndex];
+    while (result < 0) {
+      result += length;
+    }
+    while (result >= length) {
+      result -= length;
+    }
+    return result;
+  };
+
+  return [index, moveIndex, getIndex];
+  // return [index, moveIndex, nextIndex, prevIndex, getIndex];
 }
 
 export default useIndexCount;

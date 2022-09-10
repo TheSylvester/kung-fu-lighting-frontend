@@ -10,7 +10,8 @@ export const Profile = ({
   OP = "",
   lightingeffects = [],
   likes = 0,
-  downloadURL = ""
+  downloadURL = "",
+  openLightbox
 }) => {
   const [active, setActive] = useState(false);
 
@@ -40,7 +41,13 @@ export const Profile = ({
     };
 
     const img = <img alt="profile video" src={thumbnail} />;
-    const video = <VideoJS options={videoJsOptions} />;
+    const video = (
+      <VideoJS
+        options={videoJsOptions}
+        style={{ cursor: "pointer" }}
+        onClick={() => openLightbox(videoURL)}
+      />
+    );
 
     return active ? video : img;
   };

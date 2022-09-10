@@ -124,6 +124,7 @@
 .profile-card.left:hover,
 .profile-card.right:hover {
     filter: brightness(100%) blur(0px);
+    cursor: pointer;
 }
 
 .profile-card.middle,
@@ -261,6 +262,7 @@
 
 /*.profile-card video,*/
 .videojs-hero-banner {
+    cursor: pointer;
     background-color: black;
 }
 

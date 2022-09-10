@@ -1,5 +1,6 @@
-const axios = require("axios");
-const baseUrl = "http://localhost:3001/api/get-devices-and-effects";
+import axios from "axios";
+
+const baseUrl = "/api/get-devices-and-effects";
 
 const get = async (props) => {
   const response = await axios.get(baseUrl, {

@@ -108,7 +108,6 @@
 
 .info-title a:hover {
     color: var(--green);
-    /*text-decoration: underline;*/
     transition: 0.3s;
 }
 
@@ -137,14 +136,8 @@
 }
 
 .profile-name {
-    /*color: var(--lightgrey);*/
-    /*font-family: roboto, sans-serif;*/
-    /*font-style: italic;*/
-    /*font-size: 14px;*/
     margin-right: 5px;
-    /*line-height: 14px;*/
     font-size: 20px;
-    /*line-height: 100%;*/
     letter-spacing: -0.025em;
     color: var(--white);
 }
@@ -210,7 +203,7 @@ a.icon-button:visited {
     text-decoration: none;
 }
 
-i.icon-button {
+.icon-button-icon {
     font-size: 24px;
     line-height: 100%;
     color: var(--green);

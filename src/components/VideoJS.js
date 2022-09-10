@@ -9,7 +9,7 @@ import "video.js/dist/video-js.css";
 export const VideoJS = (props) => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const { options, onReady } = props;
+  const { options, onReady, onClick } = props;
 
   React.useEffect(() => {
     // Make sure Video.js player is only initialized once
@@ -29,6 +29,9 @@ export const VideoJS = (props) => {
       player.ready(() => {
         // videojs.log("player is ready");
         onReady && onReady(player);
+        if (onClick) {
+          player.on("click", onClick);
+        }
       });
 
       // You could update an existing player in the `else` block here
@@ -38,7 +41,7 @@ export const VideoJS = (props) => {
       // player.autoplay(options.autoplay);
       // player.src(options.sources);
     }
-  }, [options, videoRef, onReady]);
+  }, [options, videoRef, onReady, onClick]);
 
   // Dispose the Video.js player when the functional component unmounts
   React.useEffect(() => {
@@ -61,6 +64,7 @@ export const VideoJS = (props) => {
       <video
         ref={videoRef}
         className="video-js vjs-16-9 vjs-big-play-centered"
+        style={props.tinted ? { filter: `brightness(${props.tinted})` } : {}}
       />
     </div>
   );

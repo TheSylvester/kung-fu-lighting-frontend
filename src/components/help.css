@@ -1,0 +1,83 @@
+.instructions-header-container {
+    display: grid;
+    height: 120px;
+    background-color: var(--black);
+    background-image: url(../assets/resul-kaya-xxL1FavYOh0-unsplash-cut.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Titillium Web", sans-serif;
+}
+
+.center-text {
+    margin: auto;
+}
+
+.instructions-container {
+    display: flex;
+    font-family: "Titillium Web", sans-serif;
+    color: var(--white);
+    gap: 20px;
+    padding: 30px;
+    justify-content: center;
+}
+
+.instructions-panel {
+    width: 600px;
+    padding: 45px;
+    background-color: var(--black);
+}
+
+.instructions-panel h3 {
+    font-size: 32px;
+    font-weight: var(--regular);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.instructions-panel h5 {
+    font-size: 20px;
+    font-weight: var(--semibold);
+    text-align: center;
+    margin: 10px 0;
+}
+
+.instructions-panel a {
+    color: var(--green);
+    text-decoration: none;
+}
+
+.instructions-panel a:hover {
+    color: var(--white);
+    text-decoration: underline green;
+    transition: 0.3s;
+}
+
+.instructions-panel h3 a {
+    color: var(--white);
+    text-decoration: none;
+}
+
+.instructions-panel img {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.instructions-panel ul {
+    margin: 20px 50px;
+}
+
+.instructions-panel ul li {
+    padding: 5px 0;
+}
+
+.instructions-panel ol {
+    list-style-type: decimal;
+    margin: 0 50px;
+}
+
+.instructions-panel ol li {
+    display: list-item;
+    list-style-type: decimal;
+    padding: 5px 10px;
+}

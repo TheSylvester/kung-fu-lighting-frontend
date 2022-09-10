@@ -4,7 +4,7 @@ import { Profile } from "./Profile";
 
 const INTERSECTION_OBSERVER_MARGIN = "20px";
 
-export const ProfilesGallery = ({ query }) => {
+export const ProfilesGallery = ({ query, openLightbox }) => {
   // const [profiles, setProfiles] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -48,6 +48,7 @@ export const ProfilesGallery = ({ query }) => {
             lightingeffects={profile.lightingeffects}
             likes={profile.score + profile.local_likes}
             downloadURL={profile.download_link}
+            openLightbox={openLightbox}
           />
         ))}
         {hasMore && !isLoading && <div ref={loadMoreMarker}></div>}

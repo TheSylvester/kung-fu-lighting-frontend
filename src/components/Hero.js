@@ -29,25 +29,24 @@ const populateProfile = (rawProfile) => {
   };
 };
 
-const Hero = () => {
+const Hero = ({ openLightbox }) => {
   const [carouselNextMoving, setCarouselNextMoving] = useState(false);
   const [carouselPrevMoving, setCarouselPrevMoving] = useState(false);
 
   const query = useMemo(() => ({ tag: "featured", limit: 20 }), []);
   const { profiles: featuredProfiles } = useQueryProfileDB(query);
 
-  const [index, moveIndex, nextIndex, prevIndex] = useIndexCount(
-    featuredProfiles.length
-  );
+  // const [index, moveIndex, nextIndex, prevIndex] = useIndexCount(
+  const [index, moveIndex, getIndex] = useIndexCount(featuredProfiles.length);
 
   // guard clause for featuredProfiles not loaded / not loadable
   if (featuredProfiles === [] || featuredProfiles.length < 1) return null;
 
   // populate profiles data
   const middleProfile = populateProfile(featuredProfiles[index]);
-  const leftProfile = populateProfile(featuredProfiles[prevIndex()]);
-  const rightProfile = populateProfile(featuredProfiles[nextIndex()]);
-  const backProfile = populateProfile(featuredProfiles[nextIndex()]);
+  const leftProfile = populateProfile(featuredProfiles[getIndex(-1)]);
+  const rightProfile = populateProfile(featuredProfiles[getIndex(1)]);
+  let backProfile = populateProfile(featuredProfiles[getIndex(2)]);
 
   // * Sets carouselPrevMoving = true so that the render() will
   // * add css animation and onanimationend=carouselPrevEnd
@@ -61,7 +60,14 @@ const Hero = () => {
   return (
     <section id="hero" className="hero">
       <div className="hero-title-frame">
-        <h1 className="hero-heading float-shadow-text animate-entrance pop">
+        <h1
+          className="hero-heading float-shadow-text animate-entrance pop"
+          onClick={() =>
+            openLightbox(
+              "https://v.redd.it/8ohl4jf53ql91/HLSPlaylist.m3u8?a=1665370173%2CNzE0OGIxMGQ2ZGFmYmU1NGYxODcyYzUxMzkzNzUxMjJjZTMxMGY2NjczNmQ2N2I5NGNmMGNiODU3OWFiNjkyYg%3D%3D&amp;v=1&amp;f=sd"
+            )
+          }
+        >
           FEATURED PROFILE
         </h1>
         <h3 className="hero-subheading float-shadow-text chroma-gradient animate-entrance pop delay-1">
@@ -87,6 +93,7 @@ const Hero = () => {
           carouselPrevMoving={carouselPrevMoving}
           setCarouselPrevMoving={setCarouselPrevMoving}
           moveIndex={moveIndex}
+          openLightbox={openLightbox}
         />
         <ProfileCard
           {...rightProfile}

@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+
 const Navbar = () => {
   return (
     <nav className="navbar">
@@ -5,25 +8,32 @@ const Navbar = () => {
         <div className="nav-hamburger">
           <i className="fa-solid fa-bars icon-hamburger"></i>
         </div>
-        <a href="#top" className="logo">
-          <div className="logo-chroma chroma-gradient animate-entrance pop delay-1">
+        <HashLink to="/#top" className="logo">
+          <div className="logo-chroma logo-small chroma-gradient animate-entrance pop delay-1">
             CHROMA
           </div>
-          <div className="logo-gallery animate-entrance pop delay-2">
+          <div className="logo-gallery logo-small animate-entrance pop delay-2">
             GALLERY
           </div>
-        </a>
-        <a href="#top" className="nav-element animate-entrance pop delay-3">
+        </HashLink>
+        <HashLink
+          to="/#top"
+          className="nav-element animate-entrance pop delay-3"
+        >
           Home
-        </a>
-        <a
-          href="#profiles"
+        </HashLink>
+        <HashLink
+          to="/#profiles"
           className="nav-element animate-entrance pop delay-4"
         >
           Profiles
-        </a>
-        <div className="nav-element animate-entrance pop delay-5">How-To</div>
-        <div className="nav-element animate-entrance pop delay-6">About</div>
+        </HashLink>
+        <Link className="nav-element animate-entrance pop delay-5" to="/help">
+          Help
+        </Link>
+        <Link className="nav-element animate-entrance pop delay-6" to="/about">
+          About
+        </Link>
         <div className="login">
           <div className="login-username animate-entrance pop delay-7">
             Log in

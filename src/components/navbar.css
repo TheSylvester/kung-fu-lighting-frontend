@@ -42,10 +42,6 @@
     cursor: pointer;
 }
 
-/* .navcontents button:hover {
-  color: var(--green);
-} */
-
 .nav-hamburger {
     padding: 0 5px;
     font-size: 28px;
@@ -69,19 +65,29 @@
 
 .logo-chroma {
     /* CHROMA */
+    font-family: "Titillium Web", sans-serif;
     font-weight: var(--regular);
-    font-size: 24px;
-    line-height: 20px;
     letter-spacing: -0.02em;
 }
 
 .logo-gallery {
     /* GALLERY */
+    font-family: "Titillium Web", sans-serif;
     font-weight: var(--bold);
-    font-size: 24px;
-    line-height: 20px;
+
     color: var(--white);
 }
+
+.logo-small {
+    font-size: 24px;
+    line-height: 80%;
+}
+
+.logo-large {
+    font-size: 60px;
+    line-height: 80%;
+}
+
 
 .login {
     display: flex;

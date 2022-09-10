@@ -1,0 +1,42 @@
+div.lightbox {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    cursor: pointer;
+}
+
+div.lightbox-container {
+    display: grid;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    /*background-color: black;*/
+    /*opacity: 100%;*/
+    /*box-sizing: border-box;*/
+    /*border: 10px solid red;*/
+    top: 0;
+    left: 0;
+}
+
+div.lightbox-background {
+    /*display: block;*/
+    top: 0;
+    left: 0;
+    /*position: fixed;*/
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 70%;
+    /*border: 10px solid green;*/
+    z-index: 101;
+}
+
+.lightbox-video {
+    width: 80%;
+    height: min-content;
+    border: 1px solid var(--lightgrey);
+    margin: auto;
+    z-index: 102;
+}
+
