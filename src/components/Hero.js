@@ -46,7 +46,9 @@ const Hero = ({ openLightbox }) => {
   const middleProfile = populateProfile(featuredProfiles[index]);
   const leftProfile = populateProfile(featuredProfiles[getIndex(-1)]);
   const rightProfile = populateProfile(featuredProfiles[getIndex(1)]);
-  let backProfile = populateProfile(featuredProfiles[getIndex(2)]);
+  let backProfile = populateProfile(
+    featuredProfiles[getIndex(carouselPrevMoving ? -2 : 2)]
+  );
 
   // * Sets carouselPrevMoving = true so that the render() will
   // * add css animation and onanimationend=carouselPrevEnd

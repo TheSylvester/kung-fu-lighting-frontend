@@ -32,12 +32,15 @@ export const ProfileCard = ({
       player.on("dispose", () => {
         // videojs.log("player will dispose");
       });
+      player.on("ended", () => {
+        setCarouselNextMoving(true);
+      });
     };
     // control VideoJS source and format here
     const videoJsOptions = {
       controls: false,
       poster: thumbnail,
-      loop: true,
+      loop: false,
       autoplay: true,
       muted: true,
       fluid: true,
