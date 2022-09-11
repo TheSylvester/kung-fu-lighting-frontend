@@ -18,7 +18,7 @@ export const Lightbox = ({ lightboxON, lightboxURL, closeLightbox }) => {
     // poster: thumbnail,
     loop: true,
     autoplay: true,
-    muted: true,
+    muted: false,
     fluid: true,
     sources: [
       {
@@ -33,12 +33,8 @@ export const Lightbox = ({ lightboxON, lightboxURL, closeLightbox }) => {
   return (
     <>
       {lightboxON && (
-        <div
-          className="lightbox"
-          onClick={closeLightbox}
-          // style={{ display: lightboxON ? "block" : "none" }}
-        >
-          <div className="lightbox-background"></div>
+        <div className="lightbox" onClick={closeLightbox}>
+          <div className="lightbox-background animate-entrance pop"></div>
           <div className="lightbox-container animate-entrance pop">
             <VideoJS
               options={videoJsOptions}

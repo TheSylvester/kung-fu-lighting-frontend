@@ -1,6 +1,7 @@
 import { useState } from "react";
 import VideoJS from "./VideoJS";
 import { CardInfopanel } from "./CardInfopanel";
+// import useCheckMobileScreen from "../hooks/CheckMobileScreen";
 
 export const Profile = ({
   thumbnail = "",
@@ -14,6 +15,7 @@ export const Profile = ({
   openLightbox
 }) => {
   const [active, setActive] = useState(false);
+  // const isMobile = useCheckMobileScreen();
 
   const handleHoverEnter = () => setActive(true);
   const handleHoverLeave = () => setActive(false);
@@ -40,7 +42,13 @@ export const Profile = ({
       ]
     };
 
-    const img = <img alt="profile video" src={thumbnail} />;
+    const img = (
+      <img
+        alt="profile video"
+        src={thumbnail}
+        onClick={() => openLightbox(videoURL)}
+      />
+    );
     const video = (
       <VideoJS
         options={videoJsOptions}
