@@ -8,21 +8,21 @@ export const Help = () => {
     <section>
       <ScrollToTopOnMount />
       <div className="instructions-header-container">
-        <h1 className="hero-heading float-shadow-text animate-entrance pop center-text">
+        <h1 className="hero-heading float-shadow-text animate-entrance center-text">
           INSTRUCTIONS
         </h1>
       </div>
-      <div id="instructions-container" className="instructions-container">
+      <div className="instructions-container">
         <div className="instructions-panel">
-          <h3 className="animate-entrance pop delay-2">
-            <a href="#instructions-container">IMPORTING DOWNLOADED PROFILES</a>
+          <h3 className="animate-entrance delay-2">
+            IMPORTING DOWNLOADED PROFILES
           </h3>
           <img
-            className="animate-entrance pop delay-3"
+            className="animate-entrance delay-3"
             src={IMPORTING_PROFILES}
             alt="importing profiles demo"
           />
-          <ol className="animate-entrance pop delay-4">
+          <ol className="animate-entrance delay-4">
             <li>
               In Razer Synapse, navigate to Chroma Studio via the top nav
               (sometimes hidden behind the 3 dots, see above)
@@ -39,10 +39,10 @@ export const Help = () => {
           </ol>
         </div>
         <div className="instructions-panel">
-          <h3 className="animate-entrance pop delay-5">
-            <a href="#instructions-container">UPLOADING TO CHROMA GALLERY</a>
+          <h3 className="animate-entrance delay-5">
+            UPLOADING TO CHROMA GALLERY
           </h3>
-          <ul className="animate-entrance pop delay-6">
+          <ul className="animate-entrance delay-6">
             <li>
               Chroma Gallery is an archive of Synapse 3 Profiles from{" "}
               <a
@@ -75,14 +75,14 @@ export const Help = () => {
             </li>
           </ul>
           <img
-            className="animate-entrance pop delay-7"
+            className="animate-entrance delay-7"
             src={POST_TO_REDDIT}
             alt="post-to-reddit demo"
           />{" "}
-          <h5 className="animate-entrance pop delay-8">
+          <h5 className="animate-entrance delay-8">
             To Get Your Profile Listed on Chroma Gallery:
           </h5>
-          <ol className="animate-entrance pop delay-9">
+          <ol className="animate-entrance delay-9">
             <li>
               Post a Video of your profile on{" "}
               <a

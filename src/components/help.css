@@ -20,11 +20,12 @@
     gap: 20px;
     padding: 30px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .instructions-panel {
-    width: 600px;
-    padding: 45px;
+    max-width: 500px;
+    padding: 3vw;
     background-color: var(--black);
 }
 

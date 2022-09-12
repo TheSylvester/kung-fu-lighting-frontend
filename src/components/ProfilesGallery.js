@@ -72,7 +72,7 @@ export const ProfilesGallery = ({ query, openLightbox }) => {
 
   return (
     <section className="profiles-gallery">
-      <div className="profiles-frame animate-entrance delay-0">
+      <div className="profiles-frame animate-entrance delay-7">
         <ProfilesList />
       </div>
     </section>

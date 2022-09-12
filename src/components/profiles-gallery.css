@@ -383,7 +383,7 @@ input:focus {
 @media (min-width: 450px) {
     .profile:hover {
         z-index: 6;
-        animation: zoom-profile 0.2s 1 cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
+        animation: zoom-profile 0.3s 1 cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
     }
 }
 

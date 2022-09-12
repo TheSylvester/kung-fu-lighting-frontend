@@ -63,7 +63,7 @@ const Hero = ({ openLightbox }) => {
     <section id="hero" className="hero">
       <div className="hero-title-frame">
         <h1
-          className="hero-heading float-shadow-text animate-entrance pop"
+          className="hero-heading float-shadow-text animate-entrance delay-1"
           onClick={() =>
             openLightbox(
               "https://v.redd.it/8ohl4jf53ql91/HLSPlaylist.m3u8?a=1665370173%2CNzE0OGIxMGQ2ZGFmYmU1NGYxODcyYzUxMzkzNzUxMjJjZTMxMGY2NjczNmQ2N2I5NGNmMGNiODU3OWFiNjkyYg%3D%3D&amp;v=1&amp;f=sd"
@@ -72,11 +72,11 @@ const Hero = ({ openLightbox }) => {
         >
           FEATURED PROFILE
         </h1>
-        <h3 className="hero-subheading float-shadow-text chroma-gradient animate-entrance pop delay-1">
+        <h3 className="hero-subheading float-shadow-text chroma-gradient animate-entrance delay-2">
           {middleProfile.featured_description}
         </h3>
       </div>
-      <div className="hero-banner-frame animate-entrance delay-7 float-shadow">
+      <div className="hero-banner-frame animate-entrance delay-4 float-shadow">
         <ProfileCard
           {...leftProfile}
           position="left"

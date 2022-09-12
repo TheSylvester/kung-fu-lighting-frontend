@@ -11,7 +11,7 @@ import {
 const ProfilesSearch = () => {
   return (
     <section id="profiles" className="profiles-search image-background">
-      <h2 className="profiles-title animate-entrance pop delay-4">
+      <h2 className="profiles-title animate-entrance delay-5">
         RAZER LIGHTING PROFILES
       </h2>
     </section>
@@ -99,7 +99,7 @@ const SearchBars = ({ setQuery }) => {
 
   return (
     <section className="search-bars image-background">
-      <div className="search-bars animate-entrance delay-8">
+      <div className="search-bars animate-entrance delay-6">
         <form className="search-bars">
           <div className="input frame left">
             <div className="input search">

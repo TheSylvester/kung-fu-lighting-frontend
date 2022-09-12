@@ -10,10 +10,10 @@
     font-family: "Titillium Web", sans-serif;
     color: var(--white);
     background-color: var(--black);
-    z-index: 5;
+    z-index: 6;
 }
 
-.navcontents {
+.nav-contents {
     display: flex;
     width: 700px;
     justify-content: space-around;
@@ -31,8 +31,8 @@
     color: var(--green);
 }
 
-.navcontents button,
-.navcontents a {
+.nav-contents button,
+.nav-contents a {
     font-family: "Titillium Web", sans-serif;
     font-size: 16px;
     text-decoration: none;
@@ -43,8 +43,14 @@
 }
 
 .nav-hamburger {
+    color: var(--lightgrey);
     padding: 0 5px;
     font-size: 28px;
+    cursor: pointer;
+}
+
+.nav-hamburger:active {
+    color: var(--white);
 }
 
 @media (min-width: 450px) {
@@ -61,6 +67,38 @@
     .login-username {
         display: none;
     }
+}
+
+.nav-dropdown-button {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+
+div.nav-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    position: absolute;
+    top: 60px;
+    left: 5px;
+    border: 1px solid var(--lightgrey);
+    box-sizing: border-box;
+    opacity: 0;
+    transition: 0.3s;
+    pointer-events: none;
+    z-index: 70;
+}
+
+.nav-dropdown-menu.nav-link {
+    padding: 15px 50px;
+    font-size: 32px;
+}
+
+#nav-dropdown-toggle:checked ~ .nav-dropdown-menu {
+    opacity: 1;
+    transition: 0.3s;
+    pointer-events: auto;
 }
 
 .logo-chroma {
@@ -83,9 +121,16 @@
     line-height: 80%;
 }
 
+
 .logo-large {
     font-size: 60px;
     line-height: 80%;
+}
+
+@media (max-width: 768px) {
+    .logo-large {
+        font-size: 36px;
+    }
 }
 
 

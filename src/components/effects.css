@@ -169,14 +169,16 @@
 @keyframes animate-fade {
     0% {
         opacity: 0;
+        transform: scale(0.9);
     }
     100% {
         opacity: 1;
+        transform: scale(1);
     }
 }
 
 .animate-entrance.pop {
-    animation-duration: 0.5s;
+    animation-duration: 0.4s;
     animation-name: animate-pop;
     animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
 }

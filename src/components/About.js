@@ -26,13 +26,13 @@ export const About = () => {
         <div className="about hero-frame">
           <div className="about title-frame flex-rows">
             <div className="about">
-              <h1 className="animate-entrance pop delay-1">about:</h1>
+              <h1 className="animate-entrance delay-1">about:</h1>
             </div>
             <div>
-              <div className="logo-chroma logo-large chroma-gradient animate-entrance pop delay-3">
+              <div className="logo-chroma logo-large chroma-gradient animate-entrance delay-3">
                 CHROMA
               </div>
-              <div className="logo-gallery logo-large animate-entrance pop delay-4">
+              <div className="logo-gallery logo-large animate-entrance delay-6">
                 GALLERY
               </div>
             </div>
