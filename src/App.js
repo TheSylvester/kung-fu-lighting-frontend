@@ -1,8 +1,7 @@
 // noinspection HtmlUnknownAnchorTarget
 
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
-// import "https://kit.fontawesome.com/ddca20bf1d.js";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import { Footer } from "./components/Footer";
@@ -11,37 +10,33 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Help } from "./components/Help";
 import { About } from "./components/About";
 import { Lightbox } from "./components/Lightbox";
+import useLightbox from "./hooks/Lightbox";
+import useAuthenticatedUser from "./hooks/AuthenticatedUser";
+import { LoginProvider } from "./contexts/LoginContext";
 
 const Divider = () => <div className="divider-gap"></div>;
 
 const App = () => {
-  const [lightboxON, setLightboxON] = useState(false);
-  const [lightboxURL, setLightboxURL] = useState("");
+  const { lightboxON, lightboxURL, openLightbox, closeLightbox } =
+    useLightbox();
 
-  const openLightbox = (url) => {
-    setLightboxURL(url);
-    setLightboxON(true);
-    console.log("OPEN: ", url);
-  };
-
-  const closeLightbox = () => {
-    setLightboxURL("");
-    setLightboxON(false);
-  };
+  const { isAuthenticated, user, logout } = useAuthenticatedUser();
 
   return (
     <Router>
-      <Lightbox
-        lightboxON={lightboxON}
-        lightboxURL={lightboxURL}
-        closeLightbox={closeLightbox}
-      />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home openLightbox={openLightbox} />} />
-        <Route path="/help" element={<Help />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <LoginProvider value={{ isAuthenticated, user, logout }}>
+        <Lightbox
+          lightboxON={lightboxON}
+          lightboxURL={lightboxURL}
+          closeLightbox={closeLightbox}
+        />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home openLightbox={openLightbox} />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </LoginProvider>
     </Router>
   );
 };

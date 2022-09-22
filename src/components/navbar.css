@@ -143,5 +143,6 @@ div.nav-dropdown-menu {
 }
 
 .login-icon {
+    color: var(--lightgrey);
     font-size: 32px;
 }
