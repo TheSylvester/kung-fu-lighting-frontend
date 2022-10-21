@@ -195,22 +195,27 @@ div.like-and-download span {
 
 div.like-and-download span span,
 a.icon-button:link,
-a.icon-button:visited {
+a.icon-button:visited,
+span.icon-button {
     font-family: "Roboto", sans-serif;
     font-size: 16px;
     font-weight: var(--regular);
     color: var(--white);
     text-decoration: none;
+
 }
 
 .icon-button-icon {
     font-size: 24px;
     line-height: 100%;
     color: var(--green);
+    transition: 0.3s;
 }
 
-a.icon-button:hover {
+a.icon-button:hover,
+span.icon-button:hover {
     transform: scale(1.1, 1.1);
     transition: 0.1s;
+    cursor: pointer;
 }
 

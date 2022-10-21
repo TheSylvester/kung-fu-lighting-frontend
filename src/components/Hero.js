@@ -4,6 +4,7 @@ import useIndexCount from "../hooks/IndexCount";
 import { ProfileCard } from "./ProfileCard";
 
 const populateProfile = (rawProfile) => {
+  const id36 = rawProfile.id36;
   const featured_description = rawProfile.tags.find(
     (x) => x.tag === "featured"
   ).description;
@@ -14,9 +15,11 @@ const populateProfile = (rawProfile) => {
   const downloadURL = rawProfile.download_link;
   const OP = rawProfile.OP;
   const lightingeffects = rawProfile.lightingeffects; // provide all profiles
-  const likes = rawProfile.score;
+  const score = rawProfile.score + rawProfile.local_likes;
+  const likes = rawProfile.likes;
 
   return {
+    id36,
     featured_description,
     videoURL,
     thumbnail,
@@ -25,6 +28,7 @@ const populateProfile = (rawProfile) => {
     downloadURL,
     OP,
     lightingeffects,
+    score,
     likes
   };
 };
@@ -34,7 +38,7 @@ const Hero = ({ openLightbox }) => {
   const [carouselPrevMoving, setCarouselPrevMoving] = useState(false);
 
   const query = useMemo(() => ({ tag: "featured", limit: 20 }), []);
-  const { profiles: featuredProfiles } = useQueryProfileDB(query);
+  const { profiles: featuredProfiles, setLikes } = useQueryProfileDB(query);
 
   // const [index, moveIndex, nextIndex, prevIndex] = useIndexCount(
   const [index, moveIndex, getIndex] = useIndexCount(featuredProfiles.length);
@@ -80,6 +84,7 @@ const Hero = ({ openLightbox }) => {
         <ProfileCard
           {...leftProfile}
           position="left"
+          setLikes={setLikes}
           onClick={carouselPrev}
           carouselNextMoving={carouselNextMoving}
           setCarouselNextMoving={setCarouselNextMoving}
@@ -90,6 +95,7 @@ const Hero = ({ openLightbox }) => {
         <ProfileCard
           {...middleProfile}
           position="middle"
+          setLikes={setLikes}
           carouselNextMoving={carouselNextMoving}
           setCarouselNextMoving={setCarouselNextMoving}
           carouselPrevMoving={carouselPrevMoving}
@@ -100,6 +106,7 @@ const Hero = ({ openLightbox }) => {
         <ProfileCard
           {...rightProfile}
           position="right"
+          setLikes={setLikes}
           onClick={carouselNext}
           carouselNextMoving={carouselNextMoving}
           setCarouselNextMoving={setCarouselNextMoving}
@@ -110,6 +117,7 @@ const Hero = ({ openLightbox }) => {
         <ProfileCard
           {...backProfile}
           position="back"
+          setLikes={setLikes}
           carouselNextMoving={carouselNextMoving}
           setCarouselNextMoving={setCarouselNextMoving}
           carouselPrevMoving={carouselPrevMoving}

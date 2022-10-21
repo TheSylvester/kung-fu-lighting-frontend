@@ -1,15 +1,71 @@
 import useIndexCount from "../hooks/IndexCount";
 import colourSort from "color-sorter";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  faThumbsUp as faThumbsUpSolid
+} from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useLoginContext } from "../contexts/LoginContext";
+import { profilesService } from "../services/profiles";
+
+const UpvoteLikes = ({ id36, score, likes, setLikes }) => {
+  const { isAuthenticated } = useLoginContext();
+  // const [upvote, setUpvote] = useState(Boolean(likes));
+  const upvote = likes;
+
+  const createVote = async (vote, id) => {
+    return await profilesService.vote({
+      dir: Number(Boolean(vote)),
+      id: `t3_${id}`
+    });
+  };
+
+  // useEffect(() => {
+  //   setUpvote(Boolean(likes));
+  // }, [likes]);
+
+  const handleVote = async () => {
+    // if locked
+    try {
+      const response = await createVote(!upvote, id36);
+      if (response.status === 200) {
+        console.log(`Vote ${!upvote}`);
+        // setUpvote((v) => !v);
+        setLikes(id36, !upvote);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const { voteButton, thumbsUpIcon } = isAuthenticated
+    ? {
+        voteButton: { className: "icon-button", onClick: handleVote },
+        thumbsUpIcon: upvote ? faThumbsUpSolid : faThumbsUp
+      }
+    : {
+        voteButton: {},
+        thumbsUpIcon: faThumbsUp
+      };
+
+  return (
+    <span {...voteButton}>
+      <FontAwesomeIcon icon={thumbsUpIcon} className="icon-button-icon" />
+      <span>{score}</span>
+    </span>
+  );
+};
 
 export const CardInfopanel = ({
+  id36 = "",
   title = "",
   link = "",
   OP = "",
   lightingeffects = [],
-  likes = 0,
+  score = 0,
+  likes = null,
+  setLikes,
   downloadURL = "",
   infopanelSize = "large"
 }) => {
@@ -65,10 +121,12 @@ export const CardInfopanel = ({
           </div>
         </div>
         <div className="like-and-download">
-          <span>
-            <FontAwesomeIcon icon={faThumbsUp} className="icon-button-icon" />
-            <span>{likes}</span>
-          </span>
+          <UpvoteLikes
+            id36={id36}
+            score={score}
+            likes={likes}
+            setLikes={setLikes}
+          />
           <a
             className="icon-button"
             href={downloadURL}

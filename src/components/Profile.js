@@ -4,13 +4,16 @@ import { CardInfopanel } from "./CardInfopanel";
 // import useCheckMobileScreen from "../hooks/CheckMobileScreen";
 
 export const Profile = ({
+  id36 = "",
   thumbnail = "",
   videoURL = "",
   title = "",
   link = "",
   OP = "",
   lightingeffects = [],
-  likes = 0,
+  score = 0,
+  likes,
+  setLikes,
   downloadURL = "",
   openLightbox
 }) => {
@@ -70,11 +73,14 @@ export const Profile = ({
         <CardMedia />
       </div>
       <CardInfopanel
+        id36={id36}
         title={title}
         link={link}
         OP={OP}
         lightingeffects={lightingeffects}
+        score={score}
         likes={likes}
+        setLikes={setLikes}
         downloadURL={downloadURL}
         infopanelSize={"small"}
       />

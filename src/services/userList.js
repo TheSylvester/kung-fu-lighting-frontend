@@ -10,18 +10,7 @@ const logoutUrl = "/oauth/logout";
 const getKflUser = async () => {
   try {
     const response = await axios.get(userUrl);
-    console.log(
-      "userListService.getKflUser(): ",
-      response.status,
-      response.data
-    );
-    const /** @type { RedditUser } */ result = response.data;
-    const { id, name, snoovatar_img } = result;
-    return {
-      id,
-      name,
-      snoovatar_img
-    };
+    return response.data;
   } catch (e) {
     console.log(
       "userListService.getKflUser() error: ",

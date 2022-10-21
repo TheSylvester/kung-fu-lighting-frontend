@@ -3,6 +3,7 @@ import VideoJS from "./VideoJS";
 import { CardInfopanel } from "./CardInfopanel";
 
 export const ProfileCard = ({
+  id36,
   videoURL,
   thumbnail,
   title,
@@ -10,7 +11,9 @@ export const ProfileCard = ({
   downloadURL,
   OP,
   lightingeffects,
+  score,
   likes,
+  setLikes,
   position,
   onClick,
   carouselNextMoving,
@@ -182,11 +185,14 @@ export const ProfileCard = ({
         prev={carouselPrevMoving}
       />
       <CardInfopanel
+        id36={id36}
         title={title}
         link={link}
         OP={OP}
         lightingeffects={lightingeffects}
+        score={score}
         likes={likes}
+        setLikes={setLikes}
         downloadURL={downloadURL}
         infopanelSize={"large"}
       />

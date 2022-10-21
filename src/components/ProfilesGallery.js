@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import useQueryProfileDB from "../hooks/QueryProfileDB";
 import { Profile } from "./Profile";
 
-const INTERSECTION_OBSERVER_MARGIN = "20px";
+const INTERSECTION_OBSERVER_MARGIN = "50px";
 
 export const ProfilesGallery = ({ query, openLightbox }) => {
   // const [profiles, setProfiles] = useState([]);
@@ -14,7 +14,10 @@ export const ProfilesGallery = ({ query, openLightbox }) => {
     })();
   }, [query]);
 
-  const { profiles, hasMore, isLoading } = useQueryProfileDB(query, page);
+  const { profiles, hasMore, isLoading, setLikes } = useQueryProfileDB(
+    query,
+    page
+  );
 
   const loadMoreMarker = useRef(null); // load more profiles marker
 
@@ -40,13 +43,16 @@ export const ProfilesGallery = ({ query, openLightbox }) => {
         {profiles.map((profile, index) => (
           <Profile
             key={index}
+            id36={profile.id36}
             thumbnail={profile.thumbnail}
             videoURL={profile.hlsURL}
             title={profile.title}
             link={profile.link}
             OP={profile.OP}
             lightingeffects={profile.lightingeffects}
-            likes={profile.score + profile.local_likes}
+            score={profile.score + profile.local_likes}
+            likes={profile.likes}
+            setLikes={setLikes}
             downloadURL={profile.download_link}
             openLightbox={openLightbox}
           />

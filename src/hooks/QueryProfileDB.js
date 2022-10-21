@@ -3,10 +3,6 @@ import { profilesService } from "../services/profiles";
 
 const LIMIT = 8; // number of elements to retrieve at a time
 
-// function timeout(ms) {
-//   return new Promise((resolve) => setTimeout(resolve, ms));
-// }
-
 function useQueryProfileDB(query, page = 1) {
   const [profiles, setProfiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +19,6 @@ function useQueryProfileDB(query, page = 1) {
           limit: query.limit ?? LIMIT,
           skip: (query.limit ?? LIMIT) * ((queryHasReset ? 1 : page) - 1)
         });
-        // await timeout(5000); // ARTIFICIAL TIMEOUT
         lastQuery.current = query; // memoize the last query sent
         if (response && Array.isArray(response)) {
           setProfiles((prev) =>
@@ -40,11 +35,20 @@ function useQueryProfileDB(query, page = 1) {
     [query, page]
   );
 
+  const setLikes = (id, likes) => {
+    setProfiles((profiles) =>
+      profiles.map((p) => ({
+        ...p,
+        likes: p.id36 === id ? likes : p.likes
+      }))
+    );
+  };
+
   useEffect(() => {
     getProfiles().then();
   }, [query, page, getProfiles]);
 
-  return { profiles, hasMore, isLoading };
+  return { profiles, hasMore, isLoading, setLikes };
 }
 
 export default useQueryProfileDB;
