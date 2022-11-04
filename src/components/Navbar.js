@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { useLoginContext } from "../contexts/LoginContext";
-import config from "../config.json";
 
-const CLIENT_ID = config.CLIENT_ID;
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const RANDOM_STRING = Math.random().toString(36).slice(-5); // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-const REDIRECT_URI = `${config.BACKEND_URL}/oauth/redirect`;
+const REDIRECT_URI = `${BACKEND_URL}/oauth/redirect`;
 const DURATION = "permanent";
 const SCOPE_STRING = "identity,vote,history,read";
 const loginURL = `https://www.reddit.com/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=${RANDOM_STRING}&redirect_uri=${REDIRECT_URI}&duration=${DURATION}&scope=${SCOPE_STRING}`;

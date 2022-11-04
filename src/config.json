@@ -1,4 +1,4 @@
 {
-  "BACKEND_URL": "https://razerchroma.gallery",
-  "CLIENT_ID": "9qOEsa5Copgv1agxvDrtgA"
+  "REACT_APP_BACKEND_URL": "http://localhost:3001",
+  "REACT_APP_CLIENT_ID": "9qOEsa5Copgv1agxvDrtgA"
 }
