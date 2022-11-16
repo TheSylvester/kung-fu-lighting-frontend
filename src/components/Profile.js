@@ -1,22 +1,25 @@
 import { useState } from "react";
 import VideoJS from "./VideoJS";
 import { CardInfopanel } from "./CardInfopanel";
+import { useLightboxContext } from "../contexts/LightboxContext";
 // import useCheckMobileScreen from "../hooks/CheckMobileScreen";
 
 export const Profile = ({
-  id36 = "",
-  thumbnail = "",
-  videoURL = "",
-  title = "",
-  link = "",
-  OP = "",
-  lightingeffects = [],
-  score = 0,
-  likes,
-  setLikes,
-  downloadURL = "",
-  openLightbox
-}) => {
+                          id36 = "",
+                          thumbnail = "",
+                          videoURL = "",
+                          title = "",
+                          link = "",
+                          OP = "",
+                          lightingeffects = [],
+                          score = 0,
+                          likes,
+                          setLikes,
+                          downloadURL = ""
+                        }) => {
+
+  const { openLightbox } = useLightboxContext();
+
   const [active, setActive] = useState(false);
   // const isMobile = useCheckMobileScreen();
 

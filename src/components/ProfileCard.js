@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import VideoJS from "./VideoJS";
 import { CardInfopanel } from "./CardInfopanel";
+import { useLightboxContext } from "../contexts/LightboxContext";
 
 export const ProfileCard = ({
   id36,
@@ -20,9 +21,9 @@ export const ProfileCard = ({
   setCarouselNextMoving,
   carouselPrevMoving,
   setCarouselPrevMoving,
-  moveIndex,
-  openLightbox
+  moveIndex
 }) => {
+  const { openLightbox } = useLightboxContext();
   const CardMedia = ({ pos, thumbnail, videoURL, next, prev }) => {
     // CardMedia in the middle is a video, but everywhere else is Thumbnail only
     const playerRef = useRef(null); // ref to the Video.js player
@@ -36,6 +37,7 @@ export const ProfileCard = ({
         // videojs.log("player will dispose");
       });
       player.on("ended", () => {
+        // move to the next carousel item when ended
         setCarouselNextMoving(true);
       });
     };

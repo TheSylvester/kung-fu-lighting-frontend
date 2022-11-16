@@ -33,7 +33,7 @@ const populateProfile = (rawProfile) => {
   };
 };
 
-const Hero = ({ openLightbox }) => {
+const Hero = () => {
   const [carouselNextMoving, setCarouselNextMoving] = useState(false);
   const [carouselPrevMoving, setCarouselPrevMoving] = useState(false);
 
@@ -66,14 +66,7 @@ const Hero = ({ openLightbox }) => {
   return (
     <section id="hero" className="hero">
       <div className="hero-title-frame">
-        <h1
-          className="hero-heading float-shadow-text animate-entrance delay-1"
-          onClick={() =>
-            openLightbox(
-              "https://v.redd.it/8ohl4jf53ql91/HLSPlaylist.m3u8?a=1665370173%2CNzE0OGIxMGQ2ZGFmYmU1NGYxODcyYzUxMzkzNzUxMjJjZTMxMGY2NjczNmQ2N2I5NGNmMGNiODU3OWFiNjkyYg%3D%3D&amp;v=1&amp;f=sd"
-            )
-          }
-        >
+        <h1 className="hero-heading float-shadow-text animate-entrance delay-1">
           FEATURED PROFILE
         </h1>
         <h3 className="hero-subheading float-shadow-text chroma-gradient animate-entrance delay-2">
@@ -101,7 +94,6 @@ const Hero = ({ openLightbox }) => {
           carouselPrevMoving={carouselPrevMoving}
           setCarouselPrevMoving={setCarouselPrevMoving}
           moveIndex={moveIndex}
-          openLightbox={openLightbox}
         />
         <ProfileCard
           {...rightProfile}
